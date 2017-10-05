@@ -5,7 +5,7 @@ using System.Web;
 
 namespace FinalProject.Models
 {
-    public class Likes
+    public class Like
     {
         public int ID { get; set; }
 
