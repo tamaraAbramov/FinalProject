@@ -16,6 +16,14 @@ namespace FinalProject.Models
             // Add custom user claims here
             return userIdentity;
         }
+
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
+        public string Gender { get; set; }
+
+        public string UserPermission { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
