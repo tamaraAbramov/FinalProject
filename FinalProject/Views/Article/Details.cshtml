@@ -9,50 +9,37 @@
 </head>
 <body>
     <div>
-        <h4>Article</h4>
+        <h2>@Html.DisplayFor(model => model.Title)</h2> 
+        <h4>@Html.DisplayFor(model => model.Author) | @Html.DisplayFor(model => model.PublishDate) </h4>
+        
         <hr />
         <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.Title)
-            </dt>
-    
             <dd>
-                @Html.DisplayFor(model => model.Title)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.PublishDate)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.PublishDate)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Text)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Text)
-            </dd>
-    
-            <dt>
                 @{var imagePath = "../../Visual/Images/" + Model.Image;
                     if (Model.Image == null) { imagePath = ""; } }
                 <img id="detailsImage" src=@imagePath style="width:250px; height:250px;" alt=@Model.Image />
-            </dt>
+            </dd>
 
-            <dt>
+            <dd>
+                @Html.DisplayFor(model => model.Text)
+            </dd>
+
+            <dd>
                 @{ var videoPath = "../../Visual/Videos/" + Model.Video;
                     if (Model.Video == null) { videoPath = ""; }}
-                <video id="detailsVideo" src=@videoPath style="width:500px; margin-top: 20px;" controls="controls" />
-            </dt>
-    
+                <video id="detailsVideo" src=@videoPath style="width:500px; margin-top: 20px;"  controls="controls" alt=@Model.Video 
+                           onerror="this.style.visibility = 'hidden'" />
+            </dd>
+
         </dl>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            @Html.ActionLink("Back to home page", "Index")
+        }
+
     </div>
-    <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-        @Html.ActionLink("Back to List", "Index")
-    </p>
 </body>
 </html>
