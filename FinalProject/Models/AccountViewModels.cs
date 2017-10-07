@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace FinalProject.Models
@@ -79,6 +80,23 @@ namespace FinalProject.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        // Custom Fields
+        [Required]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
+        [Required]
+        [Display(Name = "Gender")]
+        public string Gender { get; set; }
+
+        [Display(Name = "User Permission")]
+        [DefaultValue("Normal")]
+        public string UserPermission { get; set; }
     }
 
     public class ResetPasswordViewModel

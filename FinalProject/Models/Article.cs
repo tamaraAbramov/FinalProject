@@ -13,7 +13,7 @@ namespace FinalProject.Models
         [Display(Name = "Article Title")]
         public string ArticleTitle { get; set; }
 
-        public virtual User ArticleAuthor { get; set; }
+        public virtual ApplicationUser ArticleAuthor { get; set; }
 
         public DateTime PublishedDate { get; set; }
 
