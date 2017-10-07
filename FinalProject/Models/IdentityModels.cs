@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System;
 
 namespace FinalProject.Models
 {
@@ -22,6 +23,8 @@ namespace FinalProject.Models
         public string LastName { get; set; }
 
         public string Gender { get; set; }
+
+        public DateTime BirthDate { get; set; }
 
         public string UserPermission { get; set; }
     }

@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using FinalProject.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace FinalProject.Controllers
 {
@@ -48,8 +50,14 @@ namespace FinalProject.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,Title,PublishDate,Text,Image,Video")] Article article, HttpPostedFileBase ImageUploud, HttpPostedFileBase VideoUpload)
         {
+
             if (ModelState.IsValid)
             {
+                string strCurrentUserId = User.Identity.GetUserId();
+                ApplicationUser user = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(strCurrentUserId);
+
+                article.Author = user.FirstName + " " + user.LastName;
+
                 if (ImageUploud != null)
                 {
                     ImageUploud.SaveAs(HttpContext.Server.MapPath("~/Visual/Images/")

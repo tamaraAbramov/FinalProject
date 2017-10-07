@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -94,8 +95,12 @@ namespace FinalProject.Models
         [Display(Name = "Gender")]
         public string Gender { get; set; }
 
+        [Display(Name = "Birth Date")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime BirthDate { get; set; }
+
         [Display(Name = "User Permission")]
-        [DefaultValue("Normal")]
         public string UserPermission { get; set; }
     }
 

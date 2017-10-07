@@ -15,7 +15,7 @@ namespace FinalProject.Models
         [Display(Name = "Comment Title")]
         public string CommentTitle { get; set; }
 
-        public virtual User CommentUser { get; set; }
+        public string CommentUser { get; set; }
 
         public string Text { get; set; }
 

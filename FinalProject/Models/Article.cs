@@ -14,7 +14,7 @@ namespace FinalProject.Models
         public string Title { get; set; }
 
         //Check
-        public virtual User Author { get; set; }
+        public string Author { get; set; }
 
         public DateTime PublishDate { get; set; }
 
