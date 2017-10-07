@@ -11,17 +11,17 @@ namespace FinalProject.Models
         public int ID { get; set; }
 
         [Display(Name = "Article Title")]
-        public string ArticleTitle { get; set; }
+        public string Title { get; set; }
 
-        public virtual ApplicationUser ArticleAuthor { get; set; }
+        public virtual User Author { get; set; }
 
-        public DateTime PublishedDate { get; set; }
+        public DateTime PublishDate { get; set; }
 
         public string Text { get; set; }
 
-        public string PostImage { get; set; }
+        public string Image { get; set; }
 
-        public string PostVideo { get; set; }
+        public string Video { get; set; }
 
         public virtual ICollection<Comment> Comments { get; set; }
     }

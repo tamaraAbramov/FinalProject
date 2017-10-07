@@ -1,0 +1,45 @@
+﻿@model FinalProject.Models.Article
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h2>@Html.DisplayFor(model => model.Title)</h2> 
+        <h4>@Html.DisplayFor(model => model.Author) | @Html.DisplayFor(model => model.PublishDate) </h4>
+        
+        <hr />
+        <dl class="dl-horizontal">
+            <dd>
+                @{var imagePath = "../../Visual/Images/" + Model.Image;
+                    if (Model.Image == null) { imagePath = ""; } }
+                <img id="detailsImage" src=@imagePath style="width:250px; height:250px;" alt=@Model.Image />
+            </dd>
+
+            <dd>
+                @Html.DisplayFor(model => model.Text)
+            </dd>
+
+            <dd>
+                @{ var videoPath = "../../Visual/Videos/" + Model.Video;
+                    if (Model.Video == null) { videoPath = ""; }}
+                <video id="detailsVideo" src=@videoPath style="width:500px; margin-top: 20px;"  controls="controls" alt=@Model.Video 
+                           onerror="this.style.visibility = 'hidden'" />
+            </dd>
+
+        </dl>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            @Html.ActionLink("Back to home page", "Index")
+        }
+
+    </div>
+</body>
+</html>

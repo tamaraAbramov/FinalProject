@@ -1,0 +1,82 @@
+﻿@model FinalProject.Models.Article
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Edit article</title>
+</head>
+<body>
+   @using (Html.BeginForm("Edit", "Article", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+   {
+        @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Edit Article</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ID)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-1" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Text, htmlAttributes: new { @class = "control-label col-md-1" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Text, new { cols = 30, @rows = 10 })
+                @Html.ValidationMessageFor(model => model.Text, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.HiddenFor(model => model.Image)
+                @{var imagePath = "../../Visual/Images/" + Model.Image;
+                    if (Model.Image == null) { imagePath = ""; } }
+                <img id="detailsImage" src=@imagePath style="width:250px; height:250px;" alt=@Model.Image />
+            </div>
+        </div>
+
+        <div class="form-group">
+                @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-1" })
+                <div class="editor-field">
+                    <input type="file" name="NewImage" id="NewImage" accept="image/*" />
+                    @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.HiddenFor(model => model.Video)
+                    @{ var videoPath = "../../Visual/Videos/" + Model.Video;
+                        if (Model.Video == null) { videoPath = ""; }}
+                    <video id="detailsVideo" src=@videoPath style="width:500px; margin-top: 20px;"   controls="controls" alt=@Model.Video 
+                           onerror="this.style.visibility = 'hidden'" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Video, htmlAttributes: new { @class = "control-label col-md-1" })
+                <div class="editor-field">
+                    <input type="file" name="NewVideo" id="NewVideo" accept="video/*">
+                    @Html.ValidationMessageFor(model => model.Video, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br/>
+            <div class="form-group">
+                <div class="col-md-10">
+                    <input type="submit" value="Save" class="btn btn-default" /> |
+                    @Html.ActionLink("Back to List", "Index")
+                </div>
+            </div>
+        </div>
+        }
+</body>
+</html>
