@@ -1,4 +1,4 @@
-﻿using FinalProject.Context;
+﻿using FinalProject.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ namespace FinalProject.Controllers
 {
     public class BeachController : Controller
     {
-        BeachContext db = new BeachContext();
+        NewsDbContext db = new NewsDbContext();
         // GET: Beach
         public ActionResult Index()
         { 
