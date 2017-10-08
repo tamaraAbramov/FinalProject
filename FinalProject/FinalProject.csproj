@@ -205,6 +205,9 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Article.cs" />
     <Compile Include="Models\Comment.cs" />
+    <Compile Include="Models\Facebook\FacebookAccount.cs" />
+    <Compile Include="Models\Facebook\FacebookClient.cs" />
+    <Compile Include="Models\Facebook\FacebookService.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Like.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
