@@ -13,7 +13,8 @@ namespace FinalProject.Models
         [Display(Name = "Article Title")]
         public string Title { get; set; }
 
-        //Check
+        public string AuthorID { get; set; }
+        
         public string Author { get; set; }
 
         public DateTime PublishDate { get; set; }

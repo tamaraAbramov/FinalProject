@@ -57,6 +57,7 @@ namespace FinalProject.Controllers
                 ApplicationUser user = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(strCurrentUserId);
 
                 article.Author = user.FirstName + " " + user.LastName;
+                article.AuthorID = user.Id;
 
                 if (ImageUploud != null)
                 {
