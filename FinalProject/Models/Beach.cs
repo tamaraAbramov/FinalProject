@@ -7,6 +7,8 @@ namespace FinalProject.Models
 {
     public class Beach
     {
+        public int BeachId { get; set; }
+
         public string Name { get; set; }
 
         public string Description { get; set; }
