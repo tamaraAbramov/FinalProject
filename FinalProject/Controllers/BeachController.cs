@@ -1,7 +1,10 @@
 ﻿using FinalProject.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -17,9 +20,18 @@ namespace FinalProject.Controllers
         }
 
         // GET: Beach/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Beach beach = db.Beaches.Find(id);
+            if (beach == null)
+            {
+                return HttpNotFound();
+            }
+            return View(beach);
         }
 
         // GET: Beach/Create
@@ -30,18 +42,19 @@ namespace FinalProject.Controllers
 
         // POST: Beach/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "ID,Name,Description,Zoom,Lattitude,Longtidute")] Beach beach)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add insert logic here
-
+                string strCurrentUserId = User.Identity.GetUserId();
+                ApplicationUser user = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(strCurrentUserId);
+                db.Beaches.Add(beach);
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+
+            return View(beach);
         }
 
         // GET: Beach/Edit/5

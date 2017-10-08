@@ -299,6 +299,7 @@
     <Content Include="Views\News\FindWaves.cshtml" />
     <Content Include="Views\News\Index.cshtml" />
     <Content Include="Views\Beach\Index.cshtml" />
+    <Content Include="Views\Beach\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
