@@ -11,7 +11,7 @@ namespace FinalProject.Controllers
     {
         private NewsDbContext db = new NewsDbContext();
 
-        // GET: News
+        // GET: News (Articales)
         public ActionResult Index()
         {
             if (User.IsInRole("NormalUser") || User.IsInRole("Admin"))

@@ -45,9 +45,8 @@ namespace FinalProject
                     Gender = "Female"
 
             };
-                string userPWD = "123Admin*";
 
-                var chkUser = UserManager.Create(user, "123Admin!");
+                var chkUser = UserManager.Create(user, "123Admin*");
 
                 //Add default User to Role Admin   
                 if (chkUser.Succeeded)
