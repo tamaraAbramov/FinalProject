@@ -13,5 +13,7 @@ namespace FinalProject.Models
         public DbSet<Comment> Comments { get; set; }
 
         public DbSet<Like> Likes { get; set; }
+
+        public DbSet<Beach> Beaches { get; set; }
     }
 }
