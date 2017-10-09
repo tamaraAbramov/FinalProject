@@ -19,6 +19,7 @@
                           "lat": jqxhr.responseJSON[i].Lattitude,
                           "lng": jqxhr.responseJSON[i].Longtidute,
                           "name": jqxhr.responseJSON[i].Name,
+                          "zoom": jqxhr.responseJSON[i].Zoom,
                           "description": jqxhr.responseJSON[i].Description
                       })
                   }
@@ -48,7 +49,7 @@
                                   "lat": locations[i].lat,
                                   "lng": locations[i].lng
                               }
-                              var zoom = 3;
+                              var zoom = locations[i].zoom;
                               map.setCenter(center)
                               map.setZoom(zoom)
                           }
