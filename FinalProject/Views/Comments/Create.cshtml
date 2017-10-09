@@ -37,6 +37,13 @@
             </div>
     
             <div class="form-group">
+                @Html.LabelFor(model => model.PublishDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.PublishDate, new { htmlAttributes = new { @placeholder = @System.DateTime.Now, @class = "form-control", @disabled = "disabled" } })
+                </div>
+            </div>
+
+            <div class="form-group">
                     @Html.LabelFor(model => model.Text, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
                         <textarea rows="10" cols="30" name="Text" id="Text" required></textarea>
@@ -49,14 +56,6 @@
                     @Html.EditorFor(model => model.CommentUser, new { htmlAttributes = new {  @style = "display: none" } })
                 </div>
             </div>
-
-            <div class="form-group">
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.PublishDate,  new { htmlAttributes = new { @placeholder = @System.DateTime.Now.Date, @style = "display: none" } })
-                </div>
-            </div>
-
-           
 
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
