@@ -11,14 +11,19 @@ namespace FinalProject.Models
         public int ID { get; set; }
 
         [Display(Name = "Article Title")]
+        [Required]
         public string Title { get; set; }
 
         public string AuthorID { get; set; }
         
         public string Author { get; set; }
 
+        [Display(Name = "Publish Date")]
         public DateTime PublishDate { get; set; }
 
+        [Display(Name = "Article Text")]
+        [DataType(DataType.MultilineText)]
+        [Required]
         public string Text { get; set; }
 
         public string Image { get; set; }

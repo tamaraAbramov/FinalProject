@@ -47,7 +47,8 @@
             <dd>
                 @{ var videoPath = "../../Visual/Videos/" + Model.Video;
                     if (Model.Video == null) { videoPath = ""; }}
-                <video id="detailsVideo" src=@videoPath style="width:500px; margin-top: 20px;" controls="controls" />
+                <video id="detailsVideo" src=@videoPath style="width:500px; margin-top: 20px;"  controls="controls" alt=@Model.Video 
+                           onerror="this.style.visibility = 'hidden'" />
             </dd>
         </dl>
 
@@ -55,7 +56,9 @@
         {
             @Html.AntiForgeryToken()
 
-            <div class="form-actions no-color">
+            <div class="col-md-offset-2 form-actions no-color">
+                <br />
+                <br />
                 <input type="submit" value="Delete" class="btn btn-default" /> |
                 @Html.ActionLink("Back to List", "Index")
             </div>

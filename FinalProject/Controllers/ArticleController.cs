@@ -80,11 +80,11 @@ namespace FinalProject.Controllers
                     article.PublishDate + ": " + "\r\n" + article.Text;
                 var facebookClient = new FacebookClient();
                 var facebookService = new FacebookService(facebookClient);
-                var getAccountTask = facebookService.GetAccountAsync(FacebookSettings.AccessToken);
-                Task.WaitAll(getAccountTask);
-                var account = getAccountTask.Result;
-                var postOnWallTask = facebookService.PostOnWallAsync(FacebookSettings.AccessToken, messageToPost);
-                Task.WaitAll(postOnWallTask);
+               // var getAccountTask = facebookService.GetAccountAsync(FacebookSettings.AccessToken);
+             //   Task.WaitAll(getAccountTask);
+               // var account = getAccountTask.Result;
+               // var postOnWallTask = facebookService.PostOnWallAsync(FacebookSettings.AccessToken, messageToPost);
+              //  Task.WaitAll(postOnWallTask);
 
 
                 article.PublishDate = System.DateTime.Now;
