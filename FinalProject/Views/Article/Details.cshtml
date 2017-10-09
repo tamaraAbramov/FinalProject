@@ -32,6 +32,19 @@
             </dd>
 
         </dl>
+      
+    <section id="comments">
+        <h3>Comments</h3>
+        @foreach (var comment in Model.Comments)
+        {
+            <br />
+            <h4> @Html.DisplayFor(modelItem => comment.CommentTitle)</h4>
+            <h6>@Html.DisplayFor(modelItem => comment.CommentUser)| @Html.DisplayFor(modelItem => comment.PublishDate) </h6>
+            <h5>@Html.DisplayFor(modelItem => comment.Text)</h5>
+            <br />
+            <br />
+        }
+    </section>
 
         @using (Html.BeginForm())
         {
