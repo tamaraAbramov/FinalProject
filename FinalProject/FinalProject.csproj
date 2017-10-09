@@ -303,6 +303,7 @@
     <Content Include="Views\Beach\Json.cshtml" />
     <Content Include="Views\Beach\Map.cshtml" />
     <Content Include="Views\Beach\Edit.cshtml" />
+    <Content Include="Views\Beach\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

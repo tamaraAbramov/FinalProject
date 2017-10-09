@@ -101,25 +101,27 @@ namespace FinalProject.Controllers
         }
 
         // GET: Beach/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int? id)
         {
-            return View();
+            if (id == null){
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Beach beach = db.Beaches.Find(id);
+            if (beach == null){
+                return HttpNotFound();
+            }
+            return View(beach);
         }
 
         // POST: Beach/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(int id)
         {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            Beach beach = db.Beaches.Find(id);
+            db.Beaches.Remove(beach);
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
     }
 }

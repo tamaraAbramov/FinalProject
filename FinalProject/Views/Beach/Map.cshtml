@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Map";
 }
+<h1>Top 10 best beaches in the world! (for surfing purposes only)</h1>
 <br />
 <div id="map" style="height : 550px;">
 </div>
@@ -47,7 +48,7 @@
                                   "lat": locations[i].lat,
                                   "lng": locations[i].lng
                               }
-                              var zoom = 10;
+                              var zoom = 3;
                               map.setCenter(center)
                               map.setZoom(zoom)
                           }
