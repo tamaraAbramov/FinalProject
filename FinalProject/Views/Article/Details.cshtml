@@ -13,7 +13,7 @@
         <h4>@Html.DisplayFor(model => model.Author) | @Html.DisplayFor(model => model.PublishDate) </h4>
         
         <hr />
-        <dl class="dl-horizontal">
+        <dl>
             <dd>
                 @{var imagePath = "../../Visual/Images/" + Model.Image;
                     if (Model.Image == null) { imagePath = ""; } }

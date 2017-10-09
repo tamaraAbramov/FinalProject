@@ -4,13 +4,15 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - New On The Wave</title>
-    @Styles.Render("~/Content/css")
+    
     @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/Content/css")
+    <link rel="stylesheet" href="~/Content/News.css" type="text/css" media="screen" />
 
 </head>
 <body>
     <header>
-        <img src="~/Visual/Images/new on the wave.png" alt="New On The Wave" class="logo" />
+        <img src="~/Visual/Images/new on the wave.png" alt="New On The Wave" style="width:25%; margin-left:19%;" class="logo" />
     </header>
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
@@ -34,40 +36,37 @@
     <div class="container body-content">
         @RenderBody()
         <hr />
-
-        <footer>
-            <!-- Footer -->
-            <div>
-                <section id="about">
-                    <header>
-                        <h3>About</h3>
-                    </header>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut la</p>
-                </section>
-                <section id="blogroll">
-                    <header>
-                        <h3>Blogroll</h3>
-                    </header>
-                    <ul>
-                        <li><a href="#">NETTUTS+</a></li>
-                        <li><a href="#">FreelanceSwitch</a></li>
-                    </ul>
-                </section>
-                <section id="popular">
-                    <header>
-                        <h3>Popular</h3>
-                    </header>
-                    <ul>
-                        <li><a href="#">This is the title of a blog post</a></li>
-                        <li><a href="#">Lorem ipsum dolor sit amet</a></li>
-                        <li><a href="#">Consectetur adipisicing elit, sed do eiusmod</a></li>
-                    </ul>
-                </section>
-            </div>
-        </footer>
-
-
     </div>
+    <footer>
+        <!-- Footer -->
+        <div>
+            <section id="about">
+                <header>
+                    <h3>About</h3>
+                </header>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut la</p>
+            </section>
+            <section id="blogroll">
+                <header>
+                    <h3>Blogroll</h3>
+                </header>
+                <ul>
+                    <li><a href="#">NETTUTS+</a></li>
+                    <li><a href="#">FreelanceSwitch</a></li>
+                </ul>
+            </section>
+            <section id="popular">
+                <header>
+                    <h3>Popular</h3>
+                </header>
+                <ul>
+                    <li><a href="#">This is the title of a blog post</a></li>
+                    <li><a href="#">Lorem ipsum dolor sit amet</a></li>
+                    <li><a href="#">Consectetur adipisicing elit, sed do eiusmod</a></li>
+                </ul>
+            </section>
+        </div>
+    </footer>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")

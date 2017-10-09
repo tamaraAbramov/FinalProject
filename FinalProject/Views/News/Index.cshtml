@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "Home Page";
 }
+@Styles.Render("~/Content/css")
 
 <!DOCTYPE html>
 
@@ -10,58 +11,108 @@
 {
     int i = 0;
 
-    foreach (var item in Model)
-    {
-        i++;
 
-        <div class="all content">
+    <div class="top-one">
+        @foreach (var item in Model)
+        {
+            i++;
 
-            @if (i <= 5)
+            if (i == 1)
             {
-                <div class="top five">
-                    <div>
-                        <h2>@Html.DisplayFor(model => item.Title)</h2>
-                        <h4>@Html.DisplayFor(model => item.Author) at @Html.DisplayFor(model => item.PublishDate) </h4>
+                var hreff = "../../Article/Details/" + item.ID;
+                <a href=@hreff>
+                    <dl>
+                            <dd class="top-one-dd">
 
-                        <hr />
-                        <dl class="dl-horizontal">
-                            <dd>
-                                @{var imagePath = "../../Visual/Images/" + item.Image;
+                                @{var imagePath = "../../Visual/Images/" + item.Image ;
                                     if (item.Image == null) { imagePath = ""; } }
-                                <img id="detailsImage" src=@imagePath style="width:250px; height:250px;" alt=@item.Image />
-                            </dd>
-                            <dd>
-                                @Html.DisplayFor(model => item.Text)
-                            </dd>
-                        </dl>
-                    </div>
-                </div>
-                                    }
-                                    else
-                                    {
-                                        <div class="later">
-                                            <div>
-                                                <h2>@Html.DisplayFor(model => item.Title)</h2>
-                                                <h4>@Html.DisplayFor(model => item.Author) at @Html.DisplayFor(model => item.PublishDate) </h4>
+                                <img src=@imagePath style="width: 50%; height: 100%;" alt=@item.Image />
+                                <div class="one-article-text">
+                                    <h2>@Html.DisplayFor(model => item.Title)</h2>
+                                    <h4>@Html.DisplayFor(model => item.Author) at @Html.DisplayFor(model => item.PublishDate) </h4>
+                                    <p>@Html.DisplayFor(model => item.Text)</p>
+                                </div>
 
-                                                <hr />
-                                                <dl class="dl-horizontal">
-                                                    <dd>
-                                                        @{var imagePath = "../../Visual/Images/" + item.Image;
-                                                            if (item.Image == null) { imagePath = ""; } }
-                                                        <img id="detailsImage" src=@imagePath style="width:250px; height:250px;" alt=@item.Image />
-                                                    </dd>
-                                                    <dd>
-                                                        @Html.DisplayFor(model => item.Text)
-                                                    </dd>
-                                                </dl>
-                                            </div>
-                                        </div>
-                                                            }
+                            </dd>
+                    </dl>
+                    </a>
+
+                    }
+                    break;
+
+                    }
+</div>
+        {
+            i = 0;
+        }
+
+        <div class="top-five">
+            @foreach (var item in Model)
+            {
+                i++;
+                if ((i <= 5) && (i > 1))
+                {
+                    var hreff = "../../Article/Details/" + item.ID;
+                    <div class="each-top-five">
+                        <a href=@hreff>
+                            <dl>
+                                <dd class="top-five-dd">
+                                    @{var imagePath = "../../Visual/Images/" + item.Image;
+                                        if (item.Image == null) { imagePath = ""; } }
+                                    <img src=@imagePath style="width: 35%; height: 100%;" alt=@item.Image />
+                                    <div class="five-article-text">
+                                        <h2>@Html.DisplayFor(model => item.Title)</h2>
+                                        <h4>@Html.DisplayFor(model => item.Author) at @Html.DisplayFor(model => item.PublishDate) </h4>
+                                        <p>@Html.DisplayFor(model => item.Text)</p>
+                                    </div>
+                                </dd>
+
+                            </dl>
+                        </a>
+</div>
+                }
+                else if (i > 5)
+                {
+                break;
+                }
+            }
         </div>
-                                                                }
-                                                            }
-                                                            else
-                                                            {
-                                                                <p> Please Login to view the content </p>
-                                                            }
+        {
+            i = 0;
+        }
+        
+        <div class="later-articles">
+            <br />
+
+            @foreach (var item in Model)
+            {
+                i++;
+
+                if (i > 5)
+                {
+                    var hreff = "../../Article/Details/" + item.ID;
+                    <div class="each-later-articles">
+                        <a href=@hreff>
+                            <dl>
+                                <dd class="later-article-dd">
+                                    @{var imagePath = "../../Visual/Images/" + item.Image;
+                                        if (item.Image == null) { imagePath = ""; } }
+                                    <img id="detailsImage" src=@imagePath style="height: 80%; width: 100%;" alt=@item.Image />
+                                    <div class="later-article-text">
+                                        <h4>@Html.DisplayFor(model => item.Title)</h4>
+                                    </div>
+                                </dd>
+                            </dl>
+                        </a>
+                    </div>
+                        }
+                    }
+        </div>
+
+                                       
+
+    }
+    else
+    {
+    <p> Please Login to view the content </p>
+    }
