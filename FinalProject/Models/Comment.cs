@@ -19,11 +19,10 @@ namespace FinalProject.Models
         public string CommentTitle { get; set; }
 
         [Display(Name = "Written By")]
-        [Required]
         public string CommentUser { get; set; }
 
         public string Text { get; set; }
-      
+
         [Display(Name = "Publish Date")]
         public DateTime PublishDate { get; set; }
 
