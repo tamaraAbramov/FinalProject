@@ -1,0 +1,116 @@
+﻿body {
+}
+
+.each-top-five{  
+    width: 48%;
+    float: left;
+    margin-right: 20px;
+}
+
+.five-article-text{
+    float: right;
+    width: 45%;
+    margin-right: 60px;
+    height: 150px;
+    overflow: hidden;
+    margin-top: -10px;
+    color: darkslateblue;
+}
+
+.top-five-dd{
+    height: 185px;
+    background: linear-gradient(rgba(212, 212, 212, 0.73), rgb(255, 255, 255));
+    -webkit-border-radius: 11px;
+}
+
+.one-article-text{
+    float: right;
+    width: 40%;
+    margin-right: 7%;
+    height: 295px;
+    overflow: hidden;
+    color: darkslateblue;
+}
+
+.top-one-dd{
+    height: 320px;
+    background: linear-gradient(rgba(212, 212, 212, 0.73), rgb(255, 255, 255));
+    -webkit-border-radius: 11px;
+}
+
+.each-later-articles{  
+    width: 22%;
+    float: left;
+    margin-right: 20px;
+
+}
+
+.later-article-dd{
+    height: 220px;
+    background: linear-gradient(rgb(255, 255, 255),rgba(212, 212, 212, 0.73));
+    -webkit-border-radius: 11px;
+}
+
+.later-article-text{
+    float: right;
+    width: 45%;
+    margin-right: 20%;
+    height: 20%;
+    overflow: hidden;
+    color: darkslateblue;
+}
+
+
+
+
+/*------------------------------
+=FOOTER
+------------------------------*/
+footer {
+	
+	left: 0;
+	width: 100%;
+	background: #222;
+    bottom: 0;
+    
+}
+
+	footer div {
+		display: table;
+		margin: 0 auto;
+		padding: 44px 0;
+		width: 940px;
+		color: #777;
+	}
+	
+		footer div section {
+			display: table-cell;
+			width: 300px;
+		}
+		
+		footer div #about, footer div #blogroll {
+			padding-right: 20px;
+		}
+		
+	footer h3 {
+		color: #FFF;
+	}
+	
+	footer a {
+		color: #999;
+	}
+	
+		footer a:hover {
+			color: #FFF;
+			text-decoration: none;
+		}
+	
+	footer ul {
+		margin: 0 0 0 40px;
+		list-style: square;
+		color: #565656;
+	}
+	
+		footer ul li a {
+			display: block;
+		}
