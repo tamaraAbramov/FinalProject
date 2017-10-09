@@ -3,6 +3,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -17,6 +18,17 @@ namespace FinalProject.Controllers
         public ActionResult Index()
         { 
             return View(db.Beaches.ToList());
+        }
+
+        // GET: Beach/json
+        public ActionResult Json()
+        {
+            return this.Json(db.Beaches.ToList(), JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Map()
+        {
+            return View();
         }
 
         // GET: Beach/Details/5
@@ -58,25 +70,34 @@ namespace FinalProject.Controllers
         }
 
         // GET: Beach/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Beach beach = db.Beaches.Find(id);
+            if (beach == null)
+            {
+                return HttpNotFound();
+            }
+            return View(beach);
         }
 
         // POST: Beach/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(Beach beach)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add update logic here
-
+                db.Entry(beach).State = EntityState.Modified;
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+            return View(beach);
         }
 
         // GET: Beach/Delete/5

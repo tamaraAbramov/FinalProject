@@ -1,0 +1,68 @@
+﻿
+@{
+    ViewBag.Title = "Map";
+}
+<br />
+<div id="map" style="height : 550px;">
+</div>
+@section scripts {
+<section class="scripts">
+    <script>
+        function initMap() {
+            var jqxhr = $.getJSON("json", function () {
+            })
+              .done(function () {
+                  locations = [];
+                  for (i = 0; i < jqxhr.responseJSON.length; i++){
+                      locations.push({
+                          "lat": jqxhr.responseJSON[i].Lattitude,
+                          "lng": jqxhr.responseJSON[i].Longtidute,
+                          "name": jqxhr.responseJSON[i].Name,
+                          "description": jqxhr.responseJSON[i].Description
+                      })
+                  }
+                  var center = {
+                      "lat": locations[0].lat,
+                      "lng": locations[0].lng
+                  }
+                  var map = new google.maps.Map(document.getElementById('map'), {
+                      zoom: 2,
+                      center: center
+                  });
+                  for (i = 0; i < locations.length; i++){
+                      var contentString = locations[i].description;
+                      var infowindow = new google.maps.InfoWindow({
+                          content: contentString
+                      });
+                      var marker = new google.maps.Marker({
+                          position: locations[i],
+                          map: map,
+                          title: locations[i].name
+                      });
+                      google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                          return function () {
+                              infowindow.setContent(locations[i].description);
+                              infowindow.open(map, marker);
+                              var center = {
+                                  "lat": locations[i].lat,
+                                  "lng": locations[i].lng
+                              }
+                              var zoom = 10;
+                              map.setCenter(center)
+                              map.setZoom(zoom)
+                          }
+                      })(marker, i));
+                  }
+              })
+              .fail(function () {
+                  console.log("There was a problem loading the beaches locations");
+              })
+              .always(function () {
+              });
+        }
+    </script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDzEyJ0k3REy7R0YD5x6ag3o1epGPn8UK4&callback=initMap">
+    </script>
+</section>
+}
