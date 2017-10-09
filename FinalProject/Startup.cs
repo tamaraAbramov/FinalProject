@@ -2,8 +2,11 @@
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin;
+using Newtonsoft.Json;
 using Owin;
 using System;
+using System.Collections.Generic;
+using System.IO;
 
 [assembly: OwinStartupAttribute(typeof(FinalProject.Startup))]
 namespace FinalProject
@@ -14,6 +17,7 @@ namespace FinalProject
         {
             ConfigureAuth(app);
             createRolesandUsers();
+            PopulateTopTenBeaches();
         }
 
         private void createRolesandUsers()
@@ -67,6 +71,27 @@ namespace FinalProject
             }
         }
 
+
+        private void PopulateTopTenBeaches()
+        {
+            NewsDbContext db = new NewsDbContext();
+            string thisFilePath = new System.Diagnostics.StackTrace(true).GetFrame(0).GetFileName();
+            string beachesJsonFile = thisFilePath.Replace("Startup.cs", "beaches.json");
+
+            foreach (var entity in db.Beaches)
+                db.Beaches.Remove(entity);
+            db.SaveChanges();
+
+            using (StreamReader r = new StreamReader(beachesJsonFile)){
+                string json = r.ReadToEnd();
+                List<Beach> Beaches = JsonConvert.DeserializeObject<List<Beach>>(json);
+                foreach (Beach beach in Beaches){
+                    db.Beaches.Add(beach);
+                    db.SaveChanges();
+                }
+            }
+           
+        }
     }
 
     

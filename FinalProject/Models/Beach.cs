@@ -18,5 +18,16 @@ namespace FinalProject.Models
         public double Lattitude { get; set; }
         
         public double Longtidute { get; set; }
+
+        public Beach(){
+        }
+        public Beach(int BeachId, string Name, string Description, double Zoom, double Lattitude, double Longtidute){
+            this.BeachId = BeachId;
+            this.Name = Name;
+            this.Description = Description;
+            this.Zoom = Zoom;
+            this.Lattitude = Lattitude;
+            this.Longtidute = Longtidute;
+        }
     }
 }
