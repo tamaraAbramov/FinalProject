@@ -31,10 +31,6 @@ namespace FinalProject.Models
         [Display(Name = "Gender")]
         public string Gender { get; set; }
 
-        [Display(Name = "User Permission")]
-        [DefaultValue("Reader")]
-        public string UserPermission { get; set; }
-
     }
 
     public class UserDbContext : DbContext

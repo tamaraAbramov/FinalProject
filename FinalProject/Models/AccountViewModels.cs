@@ -91,7 +91,6 @@ namespace FinalProject.Models
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
-        [Required]
         [Display(Name = "Gender")]
         public string Gender { get; set; }
 
@@ -99,9 +98,6 @@ namespace FinalProject.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime BirthDate { get; set; }
-
-        [Display(Name = "User Permission")]
-        public string UserPermission { get; set; }
     }
 
     public class ResetPasswordViewModel

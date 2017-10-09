@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using FinalProject.Models;
+using System.Net;
 
 namespace FinalProject.Controllers
 {
@@ -17,6 +18,8 @@ namespace FinalProject.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+
+        ApplicationDbContext db = new ApplicationDbContext();
 
         public AccountController()
         {
@@ -151,7 +154,7 @@ namespace FinalProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                
+
                 var user = new ApplicationUser
                 {
                     UserName = model.Email,
@@ -159,13 +162,15 @@ namespace FinalProject.Controllers
                     FirstName = model.FirstName,
                     LastName = model.LastName,
                     Gender = model.Gender,
-                    BirthDate = model.BirthDate,
-                    UserPermission = "Normal"
+                    BirthDate = model.BirthDate
                 };
 
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+
+                    await UserManager.AddToRoleAsync(user.Id, "NormalUser");
+                    
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace FinalProject.Models
 {
@@ -18,15 +19,15 @@ namespace FinalProject.Models
             return userIdentity;
         }
 
+        [Required]
         public string FirstName { get; set; }
 
+        [Required]
         public string LastName { get; set; }
 
         public string Gender { get; set; }
 
         public DateTime BirthDate { get; set; }
-
-        public string UserPermission { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
