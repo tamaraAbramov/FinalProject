@@ -95,6 +95,7 @@ namespace FinalProject.Controllers
         {
             if (ModelState.IsValid)
             {
+                comment.PublishDate = System.DateTime.Now;
                 db.Entry(comment).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
