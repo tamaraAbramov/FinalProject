@@ -9,6 +9,8 @@ using System.Web.Mvc;
 using FinalProject.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using FinalProject.Models.Facebook;
+using System.Threading.Tasks;
 
 namespace FinalProject.Controllers
 {
@@ -58,7 +60,7 @@ namespace FinalProject.Controllers
 
                 article.Author = user.FirstName + " " + user.LastName;
                 article.AuthorID = user.Id;
-
+                
                 if (ImageUploud != null)
                 {
                     ImageUploud.SaveAs(HttpContext.Server.MapPath("~/Visual/Images/")
@@ -73,9 +75,21 @@ namespace FinalProject.Controllers
                     article.Video = VideoUpload.FileName;
                 }
 
+                //Post article into facebook
+                string messageToPost = "New Article was posted by " + article.Author + " at " +
+                    article.PublishDate + ": " + "\r\n" + article.Text;
+                var facebookClient = new FacebookClient();
+                var facebookService = new FacebookService(facebookClient);
+               // var getAccountTask = facebookService.GetAccountAsync(FacebookSettings.AccessToken);
+             //   Task.WaitAll(getAccountTask);
+               // var account = getAccountTask.Result;
+               // var postOnWallTask = facebookService.PostOnWallAsync(FacebookSettings.AccessToken, messageToPost);
+              //  Task.WaitAll(postOnWallTask);
+
 
                 article.PublishDate = System.DateTime.Now;
                 db.Articles.Add(article);
+
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
