@@ -21,8 +21,10 @@
             </dd>
 
             <dd>
-                @Html.DisplayFor(model => model.Text)
-            </dd>
+                <div style="white-space: pre-line">
+                    @Html.DisplayFor(model => model.Text)
+                    </div>
+</dd>
 
             <dd>
                 @{ var videoPath = "../../Visual/Videos/" + Model.Video;
@@ -32,6 +34,44 @@
             </dd>
 
         </dl>
+      
+    <section id="comments">
+        <h3>Comments</h3>
+        @foreach (var comment in Model.Comments)
+        {
+            <br />
+            <h4> @Html.DisplayFor(modelItem => comment.CommentTitle)</h4>
+            <h6>@Html.DisplayFor(modelItem => comment.CommentUser)| @Html.DisplayFor(modelItem => comment.PublishDate) </h6>
+            <div style="white-space: pre-line">
+                <h5>@Html.DisplayFor(modelItem => comment.Text)</h5>
+            </div>
+        }
+    </section>
+
+       @using (Html.BeginForm("NewComment", "Article", null, FormMethod.Post))
+       {
+           <br />
+           <br />
+            <h4>Post a new comment</h4>
+            <br />
+            <p>
+                <input name="ArticleID" id="ArticleID" type="hidden" value="@(Model.ID)" required />
+                <input name="CommentUser" id="CommentUser" type="hidden"  />
+            </p>
+            <p>
+                <label for="name">Comment Title</label>
+                <input name="CommentTitle" id="CommentTitle" type="text" required />
+            </p>
+            <p>
+                @Html.EditorFor(model => model.PublishDate, new { htmlAttributes = new { @placeholder = @System.DateTime.Now, @class = "form-control", @disabled = "disabled" } })
+            </p>
+            <p>
+                <label for="title">Text</label>
+                <textarea name="Text" id="Text" required></textarea>
+            </p>
+          <br />
+            <p><input type="submit" value="Post new comment" /></p>
+       }
 
         @using (Html.BeginForm())
         {

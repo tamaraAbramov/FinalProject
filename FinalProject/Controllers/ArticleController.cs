@@ -21,7 +21,9 @@ namespace FinalProject.Controllers
         // GET: Article
         public ActionResult Index()
         {
-            return View(db.Articles.ToList());
+            string strCurrentUserId = User.Identity.GetUserId();
+            var articlesToShow = db.Articles.ToList().Where(a => a.AuthorID == strCurrentUserId);
+            return View(articlesToShow.ToList());
         }
 
         // GET: Article/Details/5
@@ -38,7 +40,7 @@ namespace FinalProject.Controllers
             }
             return View(article);
         }
-
+        
         // GET: Article/Create
         public ActionResult Create()
         {
@@ -178,5 +180,29 @@ namespace FinalProject.Controllers
             }
             base.Dispose(disposing);
         }
+
+
+        [HttpPost]
+        public ActionResult NewComment([Bind(Include = "ID,ArticleID,CommentTitle,CommentUser,Text, PublishDate")] Comment comment)
+        {
+            if (ModelState.IsValid)
+            {
+                string strCurrentUserId = User.Identity.GetUserId();
+                ApplicationUser user = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(strCurrentUserId);
+
+                comment.ArticleComment = db.Articles.Find(comment.ArticleID);
+                comment.CommentUser = user.FirstName + " " + user.LastName;
+
+                comment.PublishDate = System.DateTime.Now;
+
+                db.Comments.Add(comment);
+                db.SaveChanges();
+
+                return RedirectToAction("Details", new { id = comment.ArticleID });
+            }
+
+            return RedirectToAction("Index");
+        }
+        
     }
 }
