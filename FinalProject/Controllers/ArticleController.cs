@@ -62,7 +62,19 @@ namespace FinalProject.Controllers
 
                 article.Author = user.FirstName + " " + user.LastName;
                 article.AuthorID = user.Id;
-                
+
+                article.PublishDate = System.DateTime.Now;
+
+
+                //Post article into facebook
+                string messageToPost = "New Article was posted by " + article.Author + " at " +
+                    article.PublishDate + ": " + "\r\n" + article.Text;
+
+                var facebookClient = new FacebookClient();
+                var facebookService = new FacebookService(facebookClient);
+                var postOnWallTask = facebookService.PostOnWallAsync(FacebookSettings.AccessToken, messageToPost);
+
+
                 if (ImageUploud != null)
                 {
                     ImageUploud.SaveAs(HttpContext.Server.MapPath("~/Visual/Images/")
@@ -76,23 +88,12 @@ namespace FinalProject.Controllers
                                                       + VideoUpload.FileName);
                     article.Video = VideoUpload.FileName;
                 }
-
-                //Post article into facebook
-                string messageToPost = "New Article was posted by " + article.Author + " at " +
-                    article.PublishDate + ": " + "\r\n" + article.Text;
-                var facebookClient = new FacebookClient();
-                var facebookService = new FacebookService(facebookClient);
-               // var getAccountTask = facebookService.GetAccountAsync(FacebookSettings.AccessToken);
-             //   Task.WaitAll(getAccountTask);
-               // var account = getAccountTask.Result;
-               // var postOnWallTask = facebookService.PostOnWallAsync(FacebookSettings.AccessToken, messageToPost);
-              //  Task.WaitAll(postOnWallTask);
-
-
-                article.PublishDate = System.DateTime.Now;
+                
                 db.Articles.Add(article);
 
                 db.SaveChanges();
+                postOnWallTask.Wait(5000);
+
                 return RedirectToAction("Index");
             }
 

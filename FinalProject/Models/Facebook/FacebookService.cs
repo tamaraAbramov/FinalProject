@@ -8,7 +8,7 @@ namespace FinalProject.Models.Facebook
 {
     public static class FacebookSettings
     {
-        public static string AccessToken = "EAAHuIBhqFLkBAPHa1Ao1Iq9QhTBjpXu2ZASqafghbasZC87rUur7NIvIm7jEqrry9rqE3eeemgGBZC7MiD9qWwItiNMgj9XQq56SKfIINKFi5l3D1YglYY4hgKDOG6kumyemEZB3WwuuUjYHOT7n3g7RcTSH4VHGatzMkgZCC27DNnIHMfC0NNOp6WwimCUkGHkZBoq54FPAZDZD";
+        public static string AccessToken = "EAAHuIBhqFLkBAEaTZCUWtpNaxx7niq7qXMPj7bVxZBaKk0RUawa6ZBr7qjA76NAeAGsClZB3yvHNAv2w3sp3ZBUnkNtfZBihnkRNItPCK7gHNllA6xxgrZAeWAu3ZAKvojR7C3OiMT7nIQYcsoasltH7AdTlVFIHIG9MZCPe126ZC5XKj45G1ivVZCSdkZBCwZAgTmlMZD";
     }
 
     public interface IFacebookService
