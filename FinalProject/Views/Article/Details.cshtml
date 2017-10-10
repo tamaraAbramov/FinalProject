@@ -8,78 +8,92 @@
     <title>Details</title>
 </head>
 <body>
-    <div>
-        <h2>@Html.DisplayFor(model => model.Title)</h2> 
-        <h4>@Html.DisplayFor(model => model.Author) | @Html.DisplayFor(model => model.PublishDate) </h4>
-        
-        <hr />
-        <dl>
-            <dd>
-                @{var imagePath = "../../Visual/Images/" + Model.Image;
-                    if (Model.Image == null) { imagePath = ""; } }
-                <img id="detailsImage" src=@imagePath style="width:250px; height:250px;" alt=@Model.Image />
-            </dd>
+    <div id="content">
+        <div id="mainContent">
+            <section>
+                <header> 
+                <h2>@Html.DisplayFor(model => model.Title) </h2>
+                </header>
+                <h4> @Html.DisplayFor(model => model.PublishDate) by @Html.DisplayFor(model => model.Author)</h4>
+                <dl>
+                    <dd>
+                        @{var imagePath = "../../Visual/Images/" + Model.Image;
+                            if (Model.Image == null) { imagePath = ""; } }
+                        <img id="detailsImage" src=@imagePath alt=@Model.Image style="width:100%;"  />
+                    </dd>
 
-            <dd>
-                <div style="white-space: pre-line">
-                    @Html.DisplayFor(model => model.Text)
+                    <dd>
+                        <div style="white-space: pre-line">
+                            @Html.DisplayFor(model => model.Text)
+                        </div>
+                    </dd>
+
+                    
+                </dl>
+            </section>
+
+            <section id="comments">
+                <h3>Comments</h3>
+                @foreach (var comment in Model.Comments)
+                {
+                    <br />
+                    <h4> @Html.DisplayFor(modelItem => comment.CommentTitle)</h4>
+                    <h6> @Html.DisplayFor(modelItem => comment.PublishDate) by @Html.DisplayFor(modelItem => comment.CommentUser) </h6>
+                    <div style="white-space: pre-line">
+                        <h5>@Html.DisplayFor(modelItem => comment.Text)</h5>
                     </div>
-</dd>
+                }
+            </section>
 
-            <dd>
+            @using (Html.BeginForm("NewComment", "Article", null, FormMethod.Post))
+            {
+                <br />
+                <br />
+                <h4>Post a new comment</h4>
+                <br />
+                <p>
+                    <input name="ArticleID" id="ArticleID" type="hidden" value="@(Model.ID)" required />
+                    <input name="CommentUser" id="CommentUser" type="hidden" />
+                </p>
+                <p>
+                    <label for="name">Comment Title</label>
+                    <input name="CommentTitle" id="CommentTitle" type="text" required />
+                </p>
+                <p>
+                    @Html.EditorFor(model => model.PublishDate, new { htmlAttributes = new { @placeholder = @System.DateTime.Now, @class = "form-control", @disabled = "disabled" } })
+                </p>
+                <p>
+                    <label for="title">Text</label>
+                    <textarea name="Text" id="Text" required></textarea>
+                </p>
+                <br />
+                <p><input type="submit" value="Post new comment" /></p>
+            }
+        </div>
+
+            <aside>
+                <section>
+                    <a href="#"><img src="~/Visual/Images/Share.png" style="height: 45px;" /></a> <br />
+                    <h4>65</h4><a href="#"> <img src="~/Visual/Images/Like.png" style="margin-bottom: 12px; height: 40px;" /></a>
+                </section>
                 @{ var videoPath = "../../Visual/Videos/" + Model.Video;
-                    if (Model.Video == null) { videoPath = ""; }}
-                <video id="detailsVideo" src=@videoPath style="width:500px; margin-top: 20px;"  controls="controls" alt=@Model.Video 
-                           onerror="this.style.visibility = 'hidden'" />
-            </dd>
+                    if (Model.Video != null)
+                    {
+                        <section>
+                            <video id="detailsVideo" src=@videoPath style="width: 360px; margin-top: 10px;" controls="controls" alt=@Model.Video
+                                   onerror="this.style.visibility = 'hidden'" />
+                        </section>
+                        } 
+                    }
 
-        </dl>
-      
-    <section id="comments">
-        <h3>Comments</h3>
-        @foreach (var comment in Model.Comments)
-        {
-            <br />
-            <h4> @Html.DisplayFor(modelItem => comment.CommentTitle)</h4>
-            <h6>@Html.DisplayFor(modelItem => comment.CommentUser)| @Html.DisplayFor(modelItem => comment.PublishDate) </h6>
-            <div style="white-space: pre-line">
-                <h5>@Html.DisplayFor(modelItem => comment.Text)</h5>
-            </div>
-        }
-    </section>
+            </aside> 
+        </div>
 
-       @using (Html.BeginForm("NewComment", "Article", null, FormMethod.Post))
-       {
-           <br />
-           <br />
-            <h4>Post a new comment</h4>
-            <br />
-            <p>
-                <input name="ArticleID" id="ArticleID" type="hidden" value="@(Model.ID)" required />
-                <input name="CommentUser" id="CommentUser" type="hidden"  />
-            </p>
-            <p>
-                <label for="name">Comment Title</label>
-                <input name="CommentTitle" id="CommentTitle" type="text" required />
-            </p>
-            <p>
-                @Html.EditorFor(model => model.PublishDate, new { htmlAttributes = new { @placeholder = @System.DateTime.Now, @class = "form-control", @disabled = "disabled" } })
-            </p>
-            <p>
-                <label for="title">Text</label>
-                <textarea name="Text" id="Text" required></textarea>
-            </p>
-          <br />
-            <p><input type="submit" value="Post new comment" /></p>
-       }
+    @using (Html.BeginForm())
+            {
+        @Html.AntiForgeryToken()
 
-        @using (Html.BeginForm())
-        {
-            @Html.AntiForgeryToken()
-
-            @Html.ActionLink("Back to home page", "Index")
-        }
-
-    </div>
+        @Html.ActionLink("Back to home page", "Index")
+    }
 </body>
 </html>

@@ -7,7 +7,7 @@
 
 <!DOCTYPE html>
 
-@if (User.IsInRole("NormalUser") || User.IsInRole("Admin"))
+@if (User.IsInRole("NormalUser") || User.IsInRole("Admin") || User.IsInRole("Author"))
 {
     int i = 0;
 
@@ -62,7 +62,7 @@
                                     <img src=@imagePath style="width: 35%; height: 100%;" alt=@item.Image />
                                     <div class="five-article-text">
                                         <h2>@Html.DisplayFor(model => item.Title)</h2>
-                                        <h4>@Html.DisplayFor(model => item.Author) at @Html.DisplayFor(model => item.PublishDate) </h4>
+                                        <h4>@Html.DisplayFor(model => item.Author)</h4>
                                         <p>@Html.DisplayFor(model => item.Text)</p>
                                     </div>
                                 </dd>

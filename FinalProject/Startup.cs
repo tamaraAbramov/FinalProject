@@ -7,6 +7,7 @@ using Owin;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 [assembly: OwinStartupAttribute(typeof(FinalProject.Startup))]
 namespace FinalProject
@@ -38,17 +39,15 @@ namespace FinalProject
                 roleManager.Create(role);
 
                 //Here we create a Admin super user who will maintain the website                  
-
                 var user = new ApplicationUser
                 {
-                    UserName = "AdminAdmino@gmail.com",
+                    UserName = "Admin@gmail.com",
                     FirstName = "Admin",
                     LastName = "Admino",
-                    Email = "AdminAdmino@gmail.com",
+                    Email = "Admin@gmail.com",
                     BirthDate = new DateTime(2001, 01, 01, 9, 0, 0),
                     Gender = "Female"
-
-            };
+                };
 
                 var chkUser = UserManager.Create(user, "123Admin*");
 
@@ -60,8 +59,37 @@ namespace FinalProject
                 }
             }
 
+            // creating Creating NormalUser role 
+            if (!roleManager.RoleExists("Author"))
+            {
+                var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
+                role.Name = "Author";
+                roleManager.Create(role);
 
-            // creating Creating Employee role    
+                //Here we create a Admin super user who will maintain the website                  
+                var user = new ApplicationUser
+                {
+                    UserName = "Plony@gmail.com",
+                    FirstName = "Plony",
+                    LastName = "Almony",
+                    Email = "Plony@gmail.com",
+                    BirthDate = new DateTime(2001, 01, 01, 9, 0, 0),
+                    Gender = "male"
+
+                };
+
+                var chkUser = UserManager.Create(user, "123Plony*");
+
+                //Add default User to Role Admin   
+                if (chkUser.Succeeded)
+                {
+                    var result1 = UserManager.AddToRole(user.Id, "Author");
+                    string authorName = user.FirstName + " " + user.LastName;
+                    AddArticles(authorName, user.Id);
+                }
+            }
+
+            // creating Creating NormalUser role    
             if (!roleManager.RoleExists("NormalUser"))
             {
                 var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
@@ -75,23 +103,66 @@ namespace FinalProject
         private void PopulateTopTenBeaches()
         {
             NewsDbContext db = new NewsDbContext();
-            string thisFilePath = new System.Diagnostics.StackTrace(true).GetFrame(0).GetFileName();
-            string beachesJsonFile = thisFilePath.Replace("Startup.cs", "beaches.json");
+            var result = db.Beaches;
 
-            foreach (var entity in db.Beaches)
-                db.Beaches.Remove(entity);
-            db.SaveChanges();
+            //  Check if the DB is empty
+            if (!result.Any())
+            {  
+                string thisFilePath = new System.Diagnostics.StackTrace(true).GetFrame(0).GetFileName();
+                string beachesJsonFile = thisFilePath.Replace("Startup.cs", "beaches.json");
 
-            using (StreamReader r = new StreamReader(beachesJsonFile)){
-                string json = r.ReadToEnd();
-                List<Beach> Beaches = JsonConvert.DeserializeObject<List<Beach>>(json);
-                foreach (Beach beach in Beaches){
-                    db.Beaches.Add(beach);
-                    db.SaveChanges();
+                foreach (var entity in db.Beaches)
+                    db.Beaches.Remove(entity);
+                db.SaveChanges();
+
+                using (StreamReader r = new StreamReader(beachesJsonFile))
+                {
+                    string json = r.ReadToEnd();
+                    List<Beach> Beaches = JsonConvert.DeserializeObject<List<Beach>>(json);
+                    foreach (Beach beach in Beaches)
+                    {
+                        db.Beaches.Add(beach);
+                        db.SaveChanges();
+                    }
                 }
             }
            
         }
+
+        private void AddArticles(string authorAlmony, string authorIDAlmony)
+        {
+            NewsDbContext db = new NewsDbContext();
+            var result = db.Articles;
+
+            //  Check if the DB is empty
+            if (!result.Any())
+            {
+                string thisFilePath = new System.Diagnostics.StackTrace(true).GetFrame(0).GetFileName();
+                string articlesJsonFile = thisFilePath.Replace("Startup.cs", "Articles.json");
+
+                foreach (var entity in db.Articles)
+                    db.Articles.Remove(entity);
+                db.SaveChanges();
+
+                using (StreamReader r = new StreamReader(articlesJsonFile))
+                {
+                    string json = r.ReadToEnd();
+                    List<Article> Articles = JsonConvert.DeserializeObject<List<Article>>(json);
+                    foreach (Article article in Articles)
+                    {
+                        article.Author = authorAlmony;
+                        article.AuthorID = authorIDAlmony;
+                        article.PublishDate = DateTime.Now;
+
+                        db.Articles.Add(article);
+                        db.SaveChanges();
+                    }
+                }
+            }
+            
+
+        }
+
     }
 
     

@@ -89,13 +89,17 @@ h3.asideTitle  {
 /*------------------------------
 =SIDEBAR
 ------------------------------*/
-
+aside 
+{
+    position:fixed;
+    width: 425px;
+}
 
 aside section {
 	margin: 22px 0 0 22px;
 	padding: 11px 22px;
-
-	background: linear-gradient(rgb(221,221,221), rgb(230,230,230)); 
+    
+	background:  linear-gradient(rgba(81, 215, 228, 0.62), rgba(107, 239, 226, 0.18));
 	
 	/* Border-radius not implemented yet */
 	-moz-border-radius: 11px;

@@ -14,7 +14,8 @@ namespace FinalProject.Controllers
         // GET: News (Articales)
         public ActionResult Index()
         {
-            if (User.IsInRole("NormalUser") || User.IsInRole("Admin"))
+            if (User.IsInRole("NormalUser") || User.IsInRole("Admin") ||
+                User.IsInRole("Author"))
             {
                 var orderedArticles = db.Articles.OrderByDescending(a => a.PublishDate);
                 return View(orderedArticles.ToList());
