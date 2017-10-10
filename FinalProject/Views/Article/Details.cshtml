@@ -8,46 +8,78 @@
     <title>Details</title>
 </head>
 <body>
-    <div class="Details-content">
-        <div class="Details-main-content">
-            <section>
-                <h2>@Html.DisplayFor(model => model.Title)</h2>
-                <h4>@Html.DisplayFor(model => model.Author) at @Html.DisplayFor(model => model.PublishDate) </h4>
-
-                <hr />
-                <dl>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.Text)
-                    </dd>
-                    <dd>
-
-                    </dd>
-                </dl>
-            </section>
-            <section>
-                @using (Html.BeginForm())
-            {
-                    @Html.AntiForgeryToken()
-
-                    @Html.ActionLink("Back to home page", "Index")
-                }
-            </section>
-        </div>
-        <aside>
-            <section>
+    <div>
+        <h2>@Html.DisplayFor(model => model.Title)</h2> 
+        <h4>@Html.DisplayFor(model => model.Author) | @Html.DisplayFor(model => model.PublishDate) </h4>
+        
+        <hr />
+        <dl>
+            <dd>
                 @{var imagePath = "../../Visual/Images/" + Model.Image;
                     if (Model.Image == null) { imagePath = ""; } }
                 <img id="detailsImage" src=@imagePath style="width:250px; height:250px;" alt=@Model.Image />
-            </section>
-            <section>
+            </dd>
+
+            <dd>
+                <div style="white-space: pre-line">
+                    @Html.DisplayFor(model => model.Text)
+                    </div>
+</dd>
+
+            <dd>
                 @{ var videoPath = "../../Visual/Videos/" + Model.Video;
                     if (Model.Video == null) { videoPath = ""; }}
-                <video id="detailsVideo" src=@videoPath style="width:500px; margin-top: 20px;" controls="controls" alt=@Model.Video
-                       onerror="this.style.visibility = 'hidden'" />
-            </section>
-        </aside>
+                <video id="detailsVideo" src=@videoPath style="width:500px; margin-top: 20px;"  controls="controls" alt=@Model.Video 
+                           onerror="this.style.visibility = 'hidden'" />
+            </dd>
+
+        </dl>
+      
+    <section id="comments">
+        <h3>Comments</h3>
+        @foreach (var comment in Model.Comments)
+        {
+            <br />
+            <h4> @Html.DisplayFor(modelItem => comment.CommentTitle)</h4>
+            <h6>@Html.DisplayFor(modelItem => comment.CommentUser)| @Html.DisplayFor(modelItem => comment.PublishDate) </h6>
+            <div style="white-space: pre-line">
+                <h5>@Html.DisplayFor(modelItem => comment.Text)</h5>
+            </div>
+        }
+    </section>
+
+       @using (Html.BeginForm("NewComment", "Article", null, FormMethod.Post))
+       {
+           <br />
+           <br />
+            <h4>Post a new comment</h4>
+            <br />
+            <p>
+                <input name="ArticleID" id="ArticleID" type="hidden" value="@(Model.ID)" required />
+                <input name="CommentUser" id="CommentUser" type="hidden"  />
+            </p>
+            <p>
+                <label for="name">Comment Title</label>
+                <input name="CommentTitle" id="CommentTitle" type="text" required />
+            </p>
+            <p>
+                @Html.EditorFor(model => model.PublishDate, new { htmlAttributes = new { @placeholder = @System.DateTime.Now, @class = "form-control", @disabled = "disabled" } })
+            </p>
+            <p>
+                <label for="title">Text</label>
+                <textarea name="Text" id="Text" required></textarea>
+            </p>
+          <br />
+            <p><input type="submit" value="Post new comment" /></p>
+       }
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            @Html.ActionLink("Back to home page", "Index")
+        }
+
     </div>
 </body>
-
 </html>

@@ -19,7 +19,12 @@ namespace FinalProject.Controllers
         // GET: Comments
         public ActionResult Index()
         {
-            var comments = db.Comments.Include(c => c.ArticleComment);
+            string strCurrentUserId = User.Identity.GetUserId();
+            ApplicationUser user = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(strCurrentUserId);
+
+            var userName = user.FirstName + " " + user.LastName;
+            
+            var comments = db.Comments.Include(c => c.ArticleComment).Where(c => c.CommentUser == userName);
             return View(comments.ToList());
         }
 
@@ -95,6 +100,7 @@ namespace FinalProject.Controllers
         {
             if (ModelState.IsValid)
             {
+                comment.PublishDate = System.DateTime.Now;
                 db.Entry(comment).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
