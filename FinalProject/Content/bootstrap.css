@@ -924,9 +924,9 @@ pre code {
   width: 100%;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 700px) {
   .container {
-    max-width: 750px;
+    max-width: 100%;
   }
   .col-sm-1,
   .col-sm-2,

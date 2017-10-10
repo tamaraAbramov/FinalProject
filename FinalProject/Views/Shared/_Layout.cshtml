@@ -28,8 +28,11 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Find Waves", "FindWaves", "News")</li>
                     <li>@Html.ActionLink("Top 10 beaches", "Map", "Beach")</li>
-                    <li>@Html.ActionLink("Diagnostics", "Graph", "Article")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li>@Html.ActionLink("Diagnostics", "Graph", "Article")</li>
+                        <li>@Html.ActionLink("Manage Users", "ManageUsers", "Account")</li>
+                    }
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -39,32 +42,20 @@
         @RenderBody()
         <hr />
     </div>
-    <footer>
+    <footer >
         <!-- Footer -->
         <div>
             <section id="about">
-                <header>
                     <h3>About</h3>
-                </header>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut la</p>
+                <p>In this website you can find articles about surfing and surfers.
+Also Information of the top surfers beaches</p>
             </section>
-            <section id="blogroll">
-                <header>
-                    <h3>Blogroll</h3>
-                </header>
+            <section id="Creators">
+                    <h3>Creators</h3>
                 <ul>
-                    <li><a href="#">NETTUTS+</a></li>
-                    <li><a href="#">FreelanceSwitch</a></li>
-                </ul>
-            </section>
-            <section id="popular">
-                <header>
-                    <h3>Popular</h3>
-                </header>
-                <ul>
-                    <li><a href="#">This is the title of a blog post</a></li>
-                    <li><a href="#">Lorem ipsum dolor sit amet</a></li>
-                    <li><a href="#">Consectetur adipisicing elit, sed do eiusmod</a></li>
+                    <li>Tamara Abramov</li>
+                    <li>Yuval Shlev</li>
+                    <li>Shany Natan</li>
                 </ul>
             </section>
         </div>

@@ -433,7 +433,6 @@ footer {
     font-size: 16px;
     border-radius: .25rem;
     background-color: rgba(3, 101, 140, 0.70) ;
-    margin-left: 150px;
     margin-top: 15px;
 }
 
@@ -454,3 +453,4 @@ footer {
     0 30px 10px rgba(0,0,0,.18),
     0 15px 10px rgba(0,0,0,.21);
 }
+
