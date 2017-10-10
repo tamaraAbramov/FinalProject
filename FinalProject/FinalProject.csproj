@@ -252,7 +252,7 @@
     <Content Include="Scripts\_references.js" />
     <Content Include="Visual\Images\Kingsman_8c9c7b_5935630.jpg" />
     <Content Include="Visual\Images\new on the wave.png" />
-    <Content Include="Visual\Videos\shauli.mp4" />
+    <Content Include="Visual\Videos\shauli2.mp4" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -305,6 +305,8 @@
     <Content Include="Views\Beach\Map.cshtml" />
     <Content Include="Views\Beach\Edit.cshtml" />
     <Content Include="Views\Beach\Delete.cshtml" />
+    <Content Include="Views\Article\ByMonth.cshtml" />
+    <Content Include="Views\Article\Graph.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
