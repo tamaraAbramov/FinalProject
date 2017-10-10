@@ -16,6 +16,21 @@ namespace FinalProject.Controllers
 {
     public class ArticleController : Controller
     {
+        static Dictionary<int, string> months = new Dictionary<int, string>()
+                                                            {
+                                                                {1, "January"},
+                                                                {2, "February"},
+                                                                {3, "March"},
+                                                                {4, "April"},
+                                                                {5, "May"},
+                                                                {6, "June"},
+                                                                {7, "July"},
+                                                                {8, "August"},
+                                                                {9, "September"},
+                                                                {10, "October"},
+                                                                {11, "November"},
+                                                                {12, "December"},
+                                                            };
         private NewsDbContext db = new NewsDbContext();
 
         // GET: Article
@@ -182,7 +197,6 @@ namespace FinalProject.Controllers
             base.Dispose(disposing);
         }
 
-
         [HttpPost]
         public ActionResult NewComment([Bind(Include = "ID,ArticleID,CommentTitle,CommentUser,Text, PublishDate")] Comment comment)
         {
@@ -205,5 +219,42 @@ namespace FinalProject.Controllers
             return RedirectToAction("Index");
         }
         
+        private class PerMonth
+        {
+            public string Month;
+            public int Total;
+            public PerMonth(int Month, int NumberOfArticles){
+                months.TryGetValue(Month, out this.Month);
+                this.Total = NumberOfArticles;
+            }
+        };
+        // GET: Articale/ByMonth
+        public ActionResult ByMonth()
+        {
+            List<PerMonth> temp = new List<PerMonth>();
+            for (int i = 1; i < months.Count + 1; i++){
+                temp.Add(new PerMonth(i, 0));
+            }
+            var articlesByMonth = db.Articles
+            .GroupBy(c => new {
+                Month = c.PublishDate.Month
+            })
+            .Select(c => new {
+                Month = c.Key.Month,
+                Total = c.Count()
+            })
+            .OrderByDescending(a => a.Month)
+            .ToList();
+            foreach (var month in articlesByMonth){
+                temp[month.Month - 1].Total = month.Total;
+            }
+            return this.Json(temp, JsonRequestBehavior.AllowGet);
+        }
+
+        // GET: Articale/Graph
+        public ActionResult Graph()
+        {
+            return View();
+        }
     }
 }
