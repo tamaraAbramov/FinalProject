@@ -61,6 +61,70 @@
 }
 
 
+/*------------------------------
+=CONTENT AREA AND SIDEBAR LAYOUT
+------------------------------*/
+
+#content {
+	display: table;
+}
+
+h3.asideTitle  {
+    font-weight: bold;
+}
+
+	#mainContent {
+		display: table-cell;
+		width: 620px;
+		padding-right: 22px;
+	}
+	
+	aside {
+		display: table-cell;
+		width: 300px;
+		background: url("../Images/sidebar_background.png") top left;
+	}
+    
+
+/*------------------------------
+=SIDEBAR
+------------------------------*/
+
+
+aside section {
+	margin: 22px 0 0 22px;
+	padding: 11px 22px;
+
+	background: linear-gradient(rgb(221,221,221), rgb(230,230,230)); 
+	
+	/* Border-radius not implemented yet */
+	-moz-border-radius: 11px;
+	-webkit-border-radius: 11px;
+}
+
+aside section ul {
+	margin: 0 0 0 22px;
+	list-style: none;
+}
+	
+aside section ul li a {
+	display: block;
+	text-decoration: none;
+	color: #000;
+}
+		
+aside section ul li a:hover {
+	text-decoration: underline;
+}
+
+.Details-content{
+    display: table;
+}
+
+.main-content{
+    display:table-cell;
+}
+
 
 
 /*------------------------------
