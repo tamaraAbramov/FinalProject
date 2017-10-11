@@ -29,6 +29,8 @@ namespace FinalProject.Models
         public string Image { get; set; }
 
         public string Video { get; set; }
+        
+        public int SearchCount { get; set; }
 
         public virtual ICollection<Comment> Comments { get; set; }
     }
