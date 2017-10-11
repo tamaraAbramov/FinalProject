@@ -2,8 +2,28 @@
 @{
     ViewBag.Title = "Map";
 }
-<h1>Top 10 best beaches in the world! (for surfing purposes only)</h1>
-<br />
+
+<canvas class="myCanvas" id="myCanvas" width="850" height="50">
+    Your browser does not support the canvas element.
+</canvas>
+<script>
+var canvas = document.getElementById("myCanvas");
+var ctx=canvas.getContext("2d");
+ctx.font = "30px Palatino Linotype";
+
+// Create gradient
+var grd = ctx.createLinearGradient(0, 500, 1100, 0);
+grd.addColorStop(0, "MidnightBlue");
+//grd.addColorStop(1, "DeepSkyBlue");
+grd.addColorStop(1, "Aqua");
+
+
+// Fill with gradient
+ctx.fillStyle = grd;
+ctx.textAlign = "center";
+ctx.fillText("Top 10 best beaches in the world! (for surfing purposes only)", canvas.width / 2, canvas.height / 2);
+</script>
+<hr/>
 <div id="map" style="height : 550px;">
 </div>
 @section scripts {

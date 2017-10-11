@@ -16,44 +16,103 @@ namespace FinalProject.Controllers
         NewsDbContext db = new NewsDbContext();
         // GET: Beach
         public ActionResult Index()
-        { 
-            return View(db.Beaches.ToList());
+        {
+            if (User.IsInRole("Admin"))
+            {
+                return View(db.Beaches.ToList());
+            }
+            else if (User.IsInRole("NormalUser") || User.IsInRole("Author"))
+            {
+                return RedirectToAction("InsufficientAuthorization", "News");
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
         }
 
         // GET: Beach/json
         public ActionResult Json()
         {
-            return this.Json(db.Beaches.ToList(), JsonRequestBehavior.AllowGet);
+            if (User.IsInRole("Admin") || User.IsInRole("Author") || User.IsInRole("NormalUser"))
+            {
+                return this.Json(db.Beaches.ToList(), JsonRequestBehavior.AllowGet);
+            }
+            else if (User.IsInRole("NormalUser") || User.IsInRole("Author"))
+            {
+                return RedirectToAction("InsufficientAuthorization", "News");
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
         }
 
         public ActionResult Map()
         {
-            return View();
+            if (User.IsInRole("Admin") || User.IsInRole("Author") || User.IsInRole("NormalUser"))
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
         }
 
         public ActionResult BeachStatistics()
         {
-            return View();
+            if (User.IsInRole("Admin") || User.IsInRole("Author") || User.IsInRole("NormalUser"))
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
         }
         // GET: Beach/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            if (User.IsInRole("Admin"))
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Beach beach = db.Beaches.Find(id);
+                if (beach == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(beach);
+
             }
-            Beach beach = db.Beaches.Find(id);
-            if (beach == null)
+            else if (User.IsInRole("NormalUser") || User.IsInRole("Author"))
             {
-                return HttpNotFound();
+                return RedirectToAction("InsufficientAuthorization", "News");
             }
-            return View(beach);
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
         }
 
         // GET: Beach/Create
         public ActionResult Create()
         {
-            return View();
+            if (User.IsInRole("Admin"))
+            {
+                return View();
+            }
+            else if (User.IsInRole("NormalUser") || User.IsInRole("Author"))
+            {
+                return RedirectToAction("InsufficientAuthorization", "News");
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
         }
 
         // POST: Beach/Create
@@ -61,31 +120,53 @@ namespace FinalProject.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,Name,Description,Zoom,Lattitude,Longtidute")] Beach beach)
         {
-            if (ModelState.IsValid)
+            if (User.IsInRole("Admin"))
             {
-                string strCurrentUserId = User.Identity.GetUserId();
-                ApplicationUser user = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(strCurrentUserId);
-                db.Beaches.Add(beach);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+                if (ModelState.IsValid)
+                {
+                    string strCurrentUserId = User.Identity.GetUserId();
+                    ApplicationUser user = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(strCurrentUserId);
+                    db.Beaches.Add(beach);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
 
-            return View(beach);
+                return View(beach);
+            }
+            else if (User.IsInRole("NormalUser") || User.IsInRole("Author"))
+            {
+                return RedirectToAction("InsufficientAuthorization", "News");
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
         }
 
         // GET: Beach/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+            if (User.IsInRole("Admin"))
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Beach beach = db.Beaches.Find(id);
+                if (beach == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(beach);
             }
-            Beach beach = db.Beaches.Find(id);
-            if (beach == null)
+            else if (User.IsInRole("NormalUser") || User.IsInRole("Author"))
             {
-                return HttpNotFound();
+                return RedirectToAction("InsufficientAuthorization", "News");
             }
-            return View(beach);
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
         }
 
         // POST: Beach/Edit/5
@@ -95,26 +176,50 @@ namespace FinalProject.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Beach beach)
         {
-            if (ModelState.IsValid)
+            if (User.IsInRole("Admin"))
             {
-                db.Entry(beach).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Entry(beach).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                return View(beach);
             }
-            return View(beach);
+            else if (User.IsInRole("NormalUser") || User.IsInRole("Author"))
+            {
+                return RedirectToAction("InsufficientAuthorization", "News");
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
         }
 
         // GET: Beach/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null){
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            if (User.IsInRole("Admin"))
+            {
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Beach beach = db.Beaches.Find(id);
+                if (beach == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(beach);
             }
-            Beach beach = db.Beaches.Find(id);
-            if (beach == null){
-                return HttpNotFound();
+            else if (User.IsInRole("NormalUser") || User.IsInRole("Author"))
+            {
+                return RedirectToAction("InsufficientAuthorization", "News");
             }
-            return View(beach);
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
         }
 
         // POST: Beach/Delete/5
@@ -122,10 +227,21 @@ namespace FinalProject.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id)
         {
-            Beach beach = db.Beaches.Find(id);
-            db.Beaches.Remove(beach);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            if (User.IsInRole("Admin"))
+            {
+                Beach beach = db.Beaches.Find(id);
+                db.Beaches.Remove(beach);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            else if (User.IsInRole("NormalUser") || User.IsInRole("Author"))
+            {
+                return RedirectToAction("InsufficientAuthorization", "News");
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
         }
     }
 }
