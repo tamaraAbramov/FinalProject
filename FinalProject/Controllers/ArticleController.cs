@@ -214,22 +214,24 @@ namespace FinalProject.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,Title,AuthorID,Author,PublishDate,Text,Image,Video,SearchCount")] Article article, HttpPostedFileBase NewImage, HttpPostedFileBase NewVideo)
         {
-            if (User.IsInRole("Admin") || User.IsInRole("Author"))
+            string strCurrentUserId = User.Identity.GetUserId();
+
+            if (User.IsInRole("Admin") || (User.IsInRole("Author") && (article.AuthorID == strCurrentUserId)))
             {
                 if (ModelState.IsValid)
-            {
-       
-                if (NewImage != null)
                 {
-                    NewImage.SaveAs(HttpContext.Server.MapPath("~/Visual/Images/")
-                                                      + NewImage.FileName);
-                    article.Image = NewImage.FileName;
-                }
+       
+                    if (NewImage != null)
+                    {
+                        NewImage.SaveAs(HttpContext.Server.MapPath("~/Visual/Images/")
+                                                            + NewImage.FileName);
+                        article.Image = NewImage.FileName;
+                    }
 
                     if (NewVideo != null)
                     {
                         NewVideo.SaveAs(HttpContext.Server.MapPath("~/Visual/Videos/")
-                                                          + NewVideo.FileName);
+                                                            + NewVideo.FileName);
                         article.Video = NewVideo.FileName;
                     }
 
@@ -237,10 +239,15 @@ namespace FinalProject.Controllers
                     db.Entry(article).State = EntityState.Modified;
                     db.SaveChanges();
                     return RedirectToAction("Index");
+
+                    
+
+                    
+
                 }
                 return View(article);
             }
-            else if (User.IsInRole("NormalUser"))
+            else if (User.IsInRole("NormalUser") || User.IsInRole("Author"))
             {
                 return RedirectToAction("InsufficientAuthorization", "News");
             }
@@ -255,16 +262,37 @@ namespace FinalProject.Controllers
         // GET: Article/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
+            if (User.IsInRole("Admin") || User.IsInRole("Author"))
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Article article = db.Articles.Find(id);
+                if (article == null)
+                {
+                    return HttpNotFound();
+                }
+
+                string strCurrentUserId = User.Identity.GetUserId();
+
+                if ((article.AuthorID == strCurrentUserId) || User.IsInRole("Admin"))
+                {
+                    return View(article);
+                }
+                else
+                {
+                    return RedirectToAction("InsufficientAuthorization", "News");
+                }
             }
-            Article article = db.Articles.Find(id);
-            if (article == null)
+            else if (User.IsInRole("NormalUser"))
             {
-                return HttpNotFound();
+                return RedirectToAction("InsufficientAuthorization", "News");
             }
-            return View(article);
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }    
         }
 
         // POST: Article/Delete/5
@@ -273,9 +301,22 @@ namespace FinalProject.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Article article = db.Articles.Find(id);
-            db.Articles.Remove(article);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            string strCurrentUserId = User.Identity.GetUserId();
+
+            if (User.IsInRole("Admin") || (User.IsInRole("Author") && (article.AuthorID == strCurrentUserId)))
+            {
+                db.Articles.Remove(article);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            else if (User.IsInRole("NormalUser") || User.IsInRole("Author"))
+            {
+                return RedirectToAction("InsufficientAuthorization", "News");
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
         }
 
         protected override void Dispose(bool disposing)
@@ -290,23 +331,31 @@ namespace FinalProject.Controllers
         [HttpPost]
         public ActionResult NewComment([Bind(Include = "ID,ArticleID,CommentTitle,CommentUser,Text, PublishDate")] Comment comment)
         {
-            if (ModelState.IsValid)
+            if (User.IsInRole("Admin") || User.IsInRole("Author") || User.IsInRole("NormalUser"))
             {
-                string strCurrentUserId = User.Identity.GetUserId();
-                ApplicationUser user = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(strCurrentUserId);
+                if (ModelState.IsValid)
+                {
+                    string strCurrentUserId = User.Identity.GetUserId();
+                    ApplicationUser user = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(strCurrentUserId);
 
-                comment.ArticleComment = db.Articles.Find(comment.ArticleID);
-                comment.CommentUser = user.FirstName + " " + user.LastName;
+                    comment.ArticleComment = db.Articles.Find(comment.ArticleID);
+                    comment.CommentUser = user.FirstName + " " + user.LastName;
 
-                comment.PublishDate = System.DateTime.Now;
+                    comment.PublishDate = System.DateTime.Now;
 
-                db.Comments.Add(comment);
-                db.SaveChanges();
+                    db.Comments.Add(comment);
+                    db.SaveChanges();
 
-                return RedirectToAction("Details", new { id = comment.ArticleID });
+                    return RedirectToAction("Details", new { id = comment.ArticleID });
+                }
+
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
             }
 
-            return RedirectToAction("Index");
         }
         
         private class PerMonth
@@ -344,7 +393,18 @@ namespace FinalProject.Controllers
         // GET: Articale/Graph
         public ActionResult Graph()
         {
-            return View();
+            if (User.IsInRole("Admin"))
+            {
+                return View();
+            }
+            else if (User.IsInRole("NormalUser") || User.IsInRole("Author"))
+            {
+                return RedirectToAction("InsufficientAuthorization", "News");
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
         }
     }
 }
