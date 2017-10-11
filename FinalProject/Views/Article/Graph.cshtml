@@ -2,7 +2,29 @@
 @{
     ViewBag.Title = "Histogram";
 }
-<h1>Graph of article posted by month</h1>
+<canvas class="myCanvas" id="myCanvas" width="500" height="50">
+    Your browser does not support the canvas element.
+</canvas>
+
+<script>
+var canvas = document.getElementById("myCanvas");
+var ctx=canvas.getContext("2d");
+ctx.font = "30px Palatino Linotype";
+
+// Create gradient
+var grd = ctx.createLinearGradient(0, 500, 750, 0);
+grd.addColorStop(0, "MidnightBlue");
+//grd.addColorStop(1, "DeepSkyBlue");
+grd.addColorStop(1, "Aqua");
+
+
+// Fill with gradient
+ctx.fillStyle = grd;
+ctx.textAlign = "center";
+ctx.fillText("Graph of article posted by month", canvas.width/2, canvas.height/2);
+</script>
+
+
 <style>
     svg {
         position: relative;
