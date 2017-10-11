@@ -30,5 +30,10 @@ namespace FinalProject.Controllers
         {
             return View();
         }
+
+        public ActionResult InsufficientAuthorization()
+        {
+            return View();
+        }
     }
 }
