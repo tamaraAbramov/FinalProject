@@ -31,6 +31,10 @@ namespace FinalProject.Controllers
             return View();
         }
 
+        public ActionResult BeachStatistics()
+        {
+            return View();
+        }
         // GET: Beach/Details/5
         public ActionResult Details(int? id)
         {

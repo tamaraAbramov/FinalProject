@@ -1,0 +1,55 @@
+﻿
+@{
+    ViewBag.Title = "BeachStatistics";
+}
+
+<h2>BeachStatistics</h2>
+<style>
+    .wrap {
+        width:50%;
+        float:left;
+        margin-bottom: 30px;
+    }
+    .changer{
+
+    }
+</style>
+
+<script>
+    function changeIframe() {
+        document.getElementById("beachIframe").src = document.getElementsByClassName("changer")[0].value;
+    }
+</script>
+
+<div class="wrap">
+    <select class="changer" onchange="changeIframe()">
+        <option value="http://magicseaweed.com/Ashdod-Surf-Report/4219/Embed/">Ashdod</option>
+        <option value="http://magicseaweed.com/Ashqelon-Surf-Report/3811/Embed/">Ashqelon</option>
+        <option value="http://magicseaweed.com/Backdoor-Haifa-Surf-Report/3987/Embed/">Backdoor Haifa</option>
+        <option value="http://magicseaweed.com/Bat-Yam-Surf-Report/3662/Embed/">Bat Yam</option>
+        <option value="http://magicseaweed.com/Beit-Yanai-Surf-Report/3783/Embed/">Beit Yanai</option>
+        <option value="http://magicseaweed.com/Caesarea-Surf-Report/3983/Embed/">Caesarea</option>
+        <option value="http://magicseaweed.com/Dolphinarium-Surf-Report/3660/Embed/">Dolphinarium</option>
+        <option value="http://magicseaweed.com/Gaza-Surf-Report/4493/Embed/">Gaza</option>
+        <option value="http://magicseaweed.com/Gazebbo-Beach-Club-Surf-Report/3980/Embed/">Gazebbo Beach Club</option>
+        <option value="http://magicseaweed.com/Haifa-The-Peak-Surf-Report/3671/Embed/">Haifa - The Peak</option>
+        <option value="http://magicseaweed.com/Hazuk-Beach-Surf-Report/3659/Embed/">Hazuk Beach</option>
+        <option value="http://magicseaweed.com/Hilton-Surf-Report/3658/Embed/">Hilton</option>
+        <option value="http://magicseaweed.com/Hof-Maravi-Surf-Report/3663/Embed/">Hof Maravi</option>
+        <option value="http://magicseaweed.com/Maagan-Michael-Surf-Report/3984/Embed/">Maagan Michael</option>
+        <option value="http://magicseaweed.com/Marina-Herzelia-Surf-Report/3979/Embed/">Marina - Herzelia</option>
+        <option value="http://magicseaweed.com/Netanya-Surf-Report/4558/Embed/">Netanya</option>
+        <option value="http://magicseaweed.com/Palmahim-Surf-Report/3975/Embed/">Palmahim</option>
+        <option value="http://magicseaweed.com/Rishon-Lezion-Surf-Report/3976/Embed/">Rishon Lezion</option>
+        <option value="http://magicseaweed.com/Sdot-Yam-Surf-Report/3982/Embed/">Sdot Yam</option>
+        <option value="http://magicseaweed.com/Sidna-Ali-Surf-Report/3986/Embed/">Sidna Ali</option>
+        <option value="http://magicseaweed.com/Sokolov-Beach-Surf-Report/4640/Embed/">Sokolov Beach</option>
+        <option value="http://magicseaweed.com/Tel-Baruch-North-Surf-Report/3978/Embed/">Tel Baruch North</option>
+        <option value="http://magicseaweed.com/Topsy-Surf-Report/3661/Embed/">Topsy</option>
+        <option value="http://magicseaweed.com/Zikim-Surf-Report/3977/Embed/">Zikim</option>
+        <option value="http://magicseaweed.com/Zvulun-Herzelia-Surf-Report/3981/Embed/">Zvulun Herzelia</option>
+    </select>
+    <iframe id="beachIframe" src="http://magicseaweed.com/Ashdod-Surf-Report/4219/Embed/" width="940" height="4650" frameborder="0"></iframe>
+</div>
+<br>
+<br>
