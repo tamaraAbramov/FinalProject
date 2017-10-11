@@ -37,29 +37,67 @@ namespace FinalProject.Controllers
         public ActionResult Index()
         {
             string strCurrentUserId = User.Identity.GetUserId();
-            var articlesToShow = db.Articles.ToList().Where(a => a.AuthorID == strCurrentUserId);
-            return View(articlesToShow.ToList());
+
+            if (User.IsInRole("Admin"))
+            {
+                var articlesToShow = db.Articles.ToList();
+                return View(articlesToShow.ToList());
+            }
+            else if (User.IsInRole("Author"))
+            {
+                var articlesToShow = db.Articles.ToList().Where(a => a.AuthorID == strCurrentUserId);
+                return View(articlesToShow.ToList());
+            }
+            else if (User.IsInRole("NormalUser"))
+            {
+                return RedirectToAction("InsufficientAuthorization", "News");
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
         }
 
         // GET: Article/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            if (User.IsInRole("Admin") || User.IsInRole("Author") || User.IsInRole("NormalUser"))
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Article article = db.Articles.Find(id);
+                if (article == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(article);
             }
-            Article article = db.Articles.Find(id);
-            if (article == null)
+            else
             {
-                return HttpNotFound();
+                return RedirectToAction("Login", "Account");
             }
-            return View(article);
+
+  
         }
         
         // GET: Article/Create
         public ActionResult Create()
         {
-            return View();
+            if (User.IsInRole("Admin") || User.IsInRole("Author"))
+            {
+                return View();
+            }
+            else if (User.IsInRole("NormalUser"))
+            {
+                return RedirectToAction("InsufficientAuthorization", "News");
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            
         }
 
         // POST: Article/Create
@@ -67,16 +105,18 @@ namespace FinalProject.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Title,PublishDate,Text,Image,Video, SearchCount")] Article article, HttpPostedFileBase ImageUploud, HttpPostedFileBase VideoUpload)
+        public ActionResult Create([Bind(Include = "ID,Title,PublishDate,Text,Image,Video,SearchCount")] Article article, HttpPostedFileBase ImageUploud, HttpPostedFileBase VideoUpload)
         {
 
-            if (ModelState.IsValid)
+            if (User.IsInRole("Admin") || User.IsInRole("Author"))
             {
-                string strCurrentUserId = User.Identity.GetUserId();
-                ApplicationUser user = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(strCurrentUserId);
+                if (ModelState.IsValid)
+                {
+                    string strCurrentUserId = User.Identity.GetUserId();
+                    ApplicationUser user = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(strCurrentUserId);
 
-                article.Author = user.FirstName + " " + user.LastName;
-                article.AuthorID = user.Id;
+                    article.Author = user.FirstName + " " + user.LastName;
+                    article.AuthorID = user.Id;
 
                 article.PublishDate = System.DateTime.Now;
                 article.SearchCount = 0;
@@ -85,49 +125,86 @@ namespace FinalProject.Controllers
                 string messageToPost = "New Article was posted by " + article.Author + " at " +
                     article.PublishDate + ": " + "\r\n" + article.Text;
 
-                var facebookClient = new FacebookClient();
-                var facebookService = new FacebookService(facebookClient);
-                var postOnWallTask = facebookService.PostOnWallAsync(FacebookSettings.AccessToken, messageToPost);
+                    var facebookClient = new FacebookClient();
+                    var facebookService = new FacebookService(facebookClient);
+                    var postOnWallTask = facebookService.PostOnWallAsync(FacebookSettings.AccessToken, messageToPost);
 
 
-                if (ImageUploud != null)
-                {
-                    ImageUploud.SaveAs(HttpContext.Server.MapPath("~/Visual/Images/")
-                                                      + ImageUploud.FileName);
-                    article.Image = ImageUploud.FileName;
+                    if (ImageUploud != null)
+                    {
+                        ImageUploud.SaveAs(HttpContext.Server.MapPath("~/Visual/Images/")
+                                                          + ImageUploud.FileName);
+                        article.Image = ImageUploud.FileName;
+                    }
+
+                    if (VideoUpload != null)
+                    {
+                        VideoUpload.SaveAs(HttpContext.Server.MapPath("~/Visual/Videos/")
+                                                          + VideoUpload.FileName);
+                        article.Video = VideoUpload.FileName;
+                    }
+
+                    db.Articles.Add(article);
+
+                    db.SaveChanges();
+                    postOnWallTask.Wait(5000);
+
+                    return RedirectToAction("Index");
                 }
 
-                if (VideoUpload != null)
-                {
-                    VideoUpload.SaveAs(HttpContext.Server.MapPath("~/Visual/Videos/")
-                                                      + VideoUpload.FileName);
-                    article.Video = VideoUpload.FileName;
-                }
-                
-                db.Articles.Add(article);
-
-                db.SaveChanges();
-                postOnWallTask.Wait(5000);
-
-                return RedirectToAction("Index");
+                return View(article);
+            }
+            else if (User.IsInRole("NormalUser"))
+            {
+                return RedirectToAction("InsufficientAuthorization", "News");
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
             }
 
-            return View(article);
+            
         }
 
         // GET: Article/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+
+            if (User.IsInRole("Admin") || User.IsInRole("Author"))
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+
+                Article article = db.Articles.Find(id);
+
+                if (article == null)
+                {
+                    return HttpNotFound();
+                }
+
+                string strCurrentUserId = User.Identity.GetUserId();
+
+                if ((article.AuthorID == strCurrentUserId) || User.IsInRole("Admin"))
+                {
+                    return View(article);
+                }
+                else
+                {
+                    return RedirectToAction("InsufficientAuthorization", "News");
+                }
+                    
             }
-            Article article = db.Articles.Find(id);
-            if (article == null)
+            else if (User.IsInRole("NormalUser"))
             {
-                return HttpNotFound();
+                return RedirectToAction("InsufficientAuthorization", "News");
             }
-            return View(article);
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
         }
 
         // POST: Article/Edit/5
@@ -135,9 +212,11 @@ namespace FinalProject.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Title,Author, AuthorID, PublishDate,Text,Image,Video, SearchCount")] Article article, HttpPostedFileBase NewImage, HttpPostedFileBase NewVideo)
+        public ActionResult Edit([Bind(Include = "ID,Title,AuthorID,Author,PublishDate,Text,Image,Video,SearchCount")] Article article, HttpPostedFileBase NewImage, HttpPostedFileBase NewVideo)
         {
-            if (ModelState.IsValid)
+            if (User.IsInRole("Admin") || User.IsInRole("Author"))
+            {
+                if (ModelState.IsValid)
             {
        
                 if (NewImage != null)
@@ -147,19 +226,30 @@ namespace FinalProject.Controllers
                     article.Image = NewImage.FileName;
                 }
 
-                if (NewVideo != null)
-                {
-                    NewVideo.SaveAs(HttpContext.Server.MapPath("~/Visual/Videos/")
-                                                      + NewVideo.FileName);
-                    article.Video = NewVideo.FileName;
-                }
+                    if (NewVideo != null)
+                    {
+                        NewVideo.SaveAs(HttpContext.Server.MapPath("~/Visual/Videos/")
+                                                          + NewVideo.FileName);
+                        article.Video = NewVideo.FileName;
+                    }
 
-                article.PublishDate = System.DateTime.Now;
-                db.Entry(article).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                    article.PublishDate = System.DateTime.Now;
+                    db.Entry(article).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                return View(article);
             }
-            return View(article);
+            else if (User.IsInRole("NormalUser"))
+            {
+                return RedirectToAction("InsufficientAuthorization", "News");
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+              
         }
 
         // GET: Article/Delete/5

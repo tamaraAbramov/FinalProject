@@ -308,6 +308,7 @@
     <Content Include="Views\Article\Graph.cshtml" />
     <Content Include="Views\Account\ManageUsers.cshtml" />
     <Content Include="Views\Beach\BeachStatistics.cshtml" />
+    <Content Include="Views\News\InsufficientAuthorization.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
