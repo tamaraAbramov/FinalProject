@@ -67,7 +67,7 @@ namespace FinalProject.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Title,PublishDate,Text,Image,Video")] Article article, HttpPostedFileBase ImageUploud, HttpPostedFileBase VideoUpload)
+        public ActionResult Create([Bind(Include = "ID,Title,PublishDate,Text,Image,Video, SearchCount")] Article article, HttpPostedFileBase ImageUploud, HttpPostedFileBase VideoUpload)
         {
 
             if (ModelState.IsValid)
@@ -79,7 +79,7 @@ namespace FinalProject.Controllers
                 article.AuthorID = user.Id;
 
                 article.PublishDate = System.DateTime.Now;
-
+                article.SearchCount = 0;
 
                 //Post article into facebook
                 string messageToPost = "New Article was posted by " + article.Author + " at " +
@@ -135,7 +135,7 @@ namespace FinalProject.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Title,PublishDate,Text,Image,Video")] Article article, HttpPostedFileBase NewImage, HttpPostedFileBase NewVideo)
+        public ActionResult Edit([Bind(Include = "ID,Title,Author, AuthorID, PublishDate,Text,Image,Video, SearchCount")] Article article, HttpPostedFileBase NewImage, HttpPostedFileBase NewVideo)
         {
             if (ModelState.IsValid)
             {
