@@ -252,7 +252,6 @@
     <Content Include="Scripts\_references.js" />
     <Content Include="Visual\Images\Kingsman_8c9c7b_5935630.jpg" />
     <Content Include="Visual\Images\new on the wave.png" />
-    <Content Include="Visual\Videos\shauli2.mp4" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -311,6 +310,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Visual\Videos\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

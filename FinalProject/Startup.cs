@@ -146,13 +146,20 @@ namespace FinalProject
 
                 using (StreamReader r = new StreamReader(articlesJsonFile))
                 {
+                    
+
                     string json = r.ReadToEnd();
+
                     List<Article> Articles = JsonConvert.DeserializeObject<List<Article>>(json);
+
                     foreach (Article article in Articles)
                     {
+                        Random rnd = new Random(DateTime.Now.Millisecond);
+                        int month = rnd.Next(0, 10);
+                        int minusMonths = (-1) * month;
                         article.Author = authorAlmony;
                         article.AuthorID = authorIDAlmony;
-                        article.PublishDate = DateTime.Now;
+                        article.PublishDate = DateTime.Now.AddMonths(minusMonths) ;
 
                         db.Articles.Add(article);
                         db.SaveChanges();
