@@ -26,14 +26,5 @@ namespace FinalProject.Controllers
             }
         }
 
-        public ActionResult FindWaves()
-        {
-            return View();
-        }
-
-        public ActionResult InsufficientAuthorization()
-        {
-            return View();
-        }
     }
 }

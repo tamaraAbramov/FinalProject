@@ -50,7 +50,7 @@ namespace FinalProject.Controllers
             }
             else if (User.IsInRole("NormalUser"))
             {
-                return RedirectToAction("InsufficientAuthorization", "News");
+                return RedirectToAction("PrivilegeError", "News");
             }
             else
             {
@@ -91,7 +91,7 @@ namespace FinalProject.Controllers
             }
             else if (User.IsInRole("NormalUser"))
             {
-                return RedirectToAction("InsufficientAuthorization", "News");
+                return RedirectToAction("PrivilegeError", "News");
             }
             else
             {
@@ -156,7 +156,7 @@ namespace FinalProject.Controllers
             }
             else if (User.IsInRole("NormalUser"))
             {
-                return RedirectToAction("InsufficientAuthorization", "News");
+                return RedirectToAction("PrivilegeError", "News");
             }
             else
             {
@@ -193,13 +193,13 @@ namespace FinalProject.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("InsufficientAuthorization", "News");
+                    return RedirectToAction("PrivilegeError", "News");
                 }
                     
             }
             else if (User.IsInRole("NormalUser"))
             {
-                return RedirectToAction("InsufficientAuthorization", "News");
+                return RedirectToAction("PrivilegeError", "News");
             }
             else
             {
@@ -249,7 +249,7 @@ namespace FinalProject.Controllers
             }
             else if (User.IsInRole("NormalUser") || User.IsInRole("Author"))
             {
-                return RedirectToAction("InsufficientAuthorization", "News");
+                return RedirectToAction("PrivilegeError", "News");
             }
             else
             {
@@ -282,12 +282,12 @@ namespace FinalProject.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("InsufficientAuthorization", "News");
+                    return RedirectToAction("PrivilegeError", "News");
                 }
             }
             else if (User.IsInRole("NormalUser"))
             {
-                return RedirectToAction("InsufficientAuthorization", "News");
+                return RedirectToAction("PrivilegeError", "News");
             }
             else
             {
@@ -311,7 +311,7 @@ namespace FinalProject.Controllers
             }
             else if (User.IsInRole("NormalUser") || User.IsInRole("Author"))
             {
-                return RedirectToAction("InsufficientAuthorization", "News");
+                return RedirectToAction("PrivilegeError", "News");
             }
             else
             {
@@ -399,7 +399,7 @@ namespace FinalProject.Controllers
             }
             else if (User.IsInRole("NormalUser") || User.IsInRole("Author"))
             {
-                return RedirectToAction("InsufficientAuthorization", "News");
+                return RedirectToAction("PrivilegeError", "News");
             }
             else
             {
