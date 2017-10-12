@@ -66,7 +66,7 @@ namespace FinalProject
                 role.Name = "Author";
                 roleManager.Create(role);
 
-                //Here we create a Admin super user who will maintain the website                  
+                //Create a user                 
                 var user = new ApplicationUser
                 {
                     UserName = "Plony@gmail.com",
@@ -80,13 +80,34 @@ namespace FinalProject
 
                 var chkUser = UserManager.Create(user, "123Plony*");
 
-                //Add default User to Role Admin   
+                //Add default User to Role  
                 if (chkUser.Succeeded)
                 {
                     var result1 = UserManager.AddToRole(user.Id, "Author");
                     string authorName = user.FirstName + " " + user.LastName;
                     AddArticles(authorName, user.Id);
                 }
+
+                //Create a user                 
+                var anotherUser = new ApplicationUser
+                {
+                    UserName = "Else@gmail.com",
+                    FirstName = "Someone",
+                    LastName = "Else",
+                    Email = "Else@gmail.com",
+                    BirthDate = new DateTime(1990, 01, 01, 9, 0, 0),
+                    Gender = "male"
+
+                };
+
+                var chkAnotherUser = UserManager.Create(anotherUser, "123Else*");
+
+                //Add default User to Role  
+                if (chkAnotherUser.Succeeded)
+                {
+                    var result1 = UserManager.AddToRole(anotherUser.Id, "Author");
+                }
+
             }
 
             // creating Creating NormalUser role    

@@ -11,60 +11,81 @@
 
 </head>
 <body>
-    <header>
-        <img src="~/Visual/Images/new on the wave.png" alt="New On The Wave" style="width:25%; margin-left:19%;" class="logo" />
-    </header>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("New On The Wave", "Index", "News", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Find Waves", "FindWaves", "News")</li>
-                    <li>@Html.ActionLink("Top 10 beaches", "Map", "Beach")</li>
-                    <li>@Html.ActionLink("Beach Statistics", "BeachStatistics", "Beach")</li>
-                    @if (User.IsInRole("Admin"))
-                    {
-                        <li>@Html.ActionLink("Diagnostics", "Graph", "Article")</li>
-                        <li>@Html.ActionLink("Manage Users", "ManageUsers", "Account")</li>
-                    }
-                </ul>
-                @Html.Partial("_LoginPartial")
+    <div class="page-wrapper">
+        <header>
+            <img src="~/Visual/Images/new on the wave.png" alt="New On The Wave" style="width:25%; margin-left:19%;" class="logo" />
+        </header>
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink("New On The Wave", "Index", "News", new { area = "" }, new { @class = "navbar-brand" })
+                </div>
+                <div class="navbar-collapse collapse" id="slow">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Top 10 beaches", "Map", "Beach")</li>
+                        <li>@Html.ActionLink("Beach Statistics", "BeachStatistics", "Beach")</li>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Manage<span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li>@Html.ActionLink("Diagnostics", "Graph", "Article")</li>
+                                    <li>@Html.ActionLink("Manage Users", "ManageUsers", "Account")</li>
+                                    <li>@Html.ActionLink("Manage Articles", "Index", "Article")</li>
+                                    <li>@Html.ActionLink("New Article", "Create", "Article")</li>
+                                </ul>
+                            </li>
+                        }
+                        @if (User.IsInRole("Author"))
+                        {
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Manage<span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li>@Html.ActionLink("My Articles", "Index", "Article")</li>
+                                    <li>@Html.ActionLink("New Article", "Create", "Article")</li>
+                                </ul>
+                            </li>
+                        }
+                    </ul>
+                    @Html.Partial("_LoginPartial")
+                </div>
             </div>
         </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-    </div>
-    <footer >
+        <div class="container body-content">
+            @RenderBody()
+            <hr />
+        </div>
+        </div>
         <!-- Footer -->
-        <div>
-            <section id="about">
+        <footer>
+            <div class="container">
+                <section id="about">
                     <h3>About</h3>
-                <p>In this website you can find articles about surfing and surfers.
-Also Information of the top surfers beaches</p>
-            </section>
-            <section id="Creators">
+                    <p>
+                        In this website you can find articles about surfing and surfers.
+                        Also Information of the top surfers beaches
+                    </p>
+                </section>
+                <section id="Creators">
                     <h3>Creators</h3>
-                <ul>
-                    <li>Tamara Abramov</li>
-                    <li>Yuval Shlev</li>
-                    <li>Shany Natan</li>
-                </ul>
-            </section>
-        </div>
-    </footer>
+                    <ul>
+                        <li>Tamara Abramov</li>
+                        <li>Yuval Shlev</li>
+                        <li>Shany Natan</li>
+                    </ul>
+                </section>
+            </div>
+        </footer>
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+
 </body>
 </html>
 
