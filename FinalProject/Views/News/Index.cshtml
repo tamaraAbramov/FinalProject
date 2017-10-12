@@ -9,9 +9,8 @@
 @section Scripts {
     <script>
         $(document).ready(function () {
-            console.log("ready!");
+
             $('#SearchArticles').click(SearchResult);
-        });
 
         function SearchResult() {
             var defultResult = "###";
@@ -55,12 +54,11 @@
                 articleTitle: articleTitle, autherName: autherName,
                 articleText: articleText, startDate: startDate, endDate: endDate},
                 function (result) {
-                    $('#resultsView').empty();
                     $('#resultsView').html(result);
                 });
 
         }
-
+        });
         var start = document.getElementById('StartDate');
         var end = document.getElementById('EndDate');
 
@@ -92,12 +90,11 @@
                     <td><input placeholder="To date" class="textbox-n" type="text" onfocus="(this.type='date')" id="EndDate"></td>
                     <td><button id="SearchArticles" class="btn btn-primary">Search</button></td>
                 </tr>
-
             </table>
+            <div id="resultsView" />
         </form>
         </div>
 
-        <div id="resultsView" />
 
     int i = 0;
 
