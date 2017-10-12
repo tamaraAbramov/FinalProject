@@ -51,11 +51,12 @@
             }
 
 
-            $.get('/Ajax/SearchArticleResult', {
+            $.get('/News/SearchArticleResult', {
                 articleTitle: articleTitle, autherName: autherName,
                 articleText: articleText, startDate: startDate, endDate: endDate},
                 function (result) {
-                    $("SearchArticles").html(result);
+                    $('#resultsView').empty();
+                    $('#resultsView').html(result);
                 });
 
         }
@@ -93,9 +94,10 @@
                 </tr>
 
             </table>
-
         </form>
         </div>
+
+        <div id="resultsView" />
 
     int i = 0;
 
