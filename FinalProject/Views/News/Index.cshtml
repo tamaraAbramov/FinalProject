@@ -5,10 +5,97 @@
 }
 @Styles.Render("~/Content/css")
 
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+
+            $('#SearchArticles').click(SearchResult);
+
+        function SearchResult() {
+            var defultResult = "###";
+            var articleTitle;
+            var autherName;
+            var articleText;
+            var startDate;
+            var endDate;
+
+            if (!$('#ArticleTitle').val()) {
+                articleTitle = defultResult;
+            }
+            else {
+                articleTitle = $('#ArticleTitle').val();
+            }
+
+            if (!$('#AutherName').val()) {
+                autherName = defultResult;
+            }
+            else {
+               autherName = $('#AutherName').val();
+            }
+
+            if (!$('#ArticleText').val()) {
+                articleText = defultResult;
+            }
+            else {
+                articleText = $('#ArticleText').val();
+            }
+
+            if ($('#StartDate').val()) {
+                startDate = $('#StartDate').val();
+            }
+
+            if ($('#EndDate').val()) {
+                endDate = $('#EndDate').val();
+            }
+
+
+            $.get('/News/SearchArticleResult', {
+                articleTitle: articleTitle, autherName: autherName,
+                articleText: articleText, startDate: startDate, endDate: endDate},
+                function (result) {
+                    $('#resultsView').html(result);
+                });
+
+        }
+        });
+        var start = document.getElementById('StartDate');
+        var end = document.getElementById('EndDate');
+
+        start.addEventListener('change', function () {
+            if (start.value)
+                end.min = start.value;
+        }, false);
+        end.addEventLiseter('change', function () {
+            if (end.value)
+                start.max = end.value;
+        }, false);
+
+    </script>
+}
+
 <!DOCTYPE html>
 
 @if (User.IsInRole("NormalUser") || User.IsInRole("Admin") || User.IsInRole("Author"))
 {
+    <div class="top-one">
+        <form action="#">
+
+            <table>
+                <tr>
+                    <td><input type="text" placeholder="Article title" id="ArticleTitle" name="ArticleTitle"></td>
+                    <td><input type="text" placeholder="Auther name" id="AutherName" name="AutherName"></td>
+                    <td><input type="text" placeholder="words from text" id="ArticleText" name="ArticleText"></td>
+                    <td><input placeholder="From date" class="textbox-n" type="text" onfocus="(this.type='date')" id="StartDate"></td>      
+                    <td><input placeholder="To date" class="textbox-n" type="text" onfocus="(this.type='date')" id="EndDate"></td>
+                    <td><button id="SearchArticles" class="btn btn-primary">Search</button></td>
+                </tr>
+            </table>
+            <div id="resultsView" />
+        </form>
+        </div>
+
+
     int i = 0;
 
 
@@ -22,6 +109,7 @@
                 var hreff = "../../Article/Details/" + item.ID;
                 <a href=@hreff>
                     <dl>
+
                             <dd class="top-one-dd">
 
                                 @{var imagePath = "../../Visual/Images/" + item.Image ;
@@ -33,86 +121,87 @@
                                     <p>@Html.DisplayFor(model => item.Text)</p>
                                 </div>
 
-                            </dd>
+
+                        </dd>
                     </dl>
-                    </a>
+                </a>
 
-                    }
-                    break;
+                                    }
+                                    break;
 
-                    }
-</div>
-        {
-            i = 0;
-        }
+                                }
+    </div>
+                                {
+                                    i = 0;
+                                }
 
-        <div class="top-five">
-            @foreach (var item in Model)
-            {
-                i++;
-                if ((i <= 5) && (i > 1))
-                {
-                    var hreff = "../../Article/Details/" + item.ID;
-                    <div class="each-top-five">
-                        <a href=@hreff>
-                            <dl>
-                                <dd class="top-five-dd">
-                                    @{var imagePath = "../../Visual/Images/" + item.Image;
-                                        if (item.Image == null) { imagePath = ""; } }
-                                    <img src=@imagePath style="width: 35%; height: 100%;" alt=@item.Image />
-                                    <div class="five-article-text">
-                                        <h2>@Html.DisplayFor(model => item.Title)</h2>
-                                        <h4>@Html.DisplayFor(model => item.Author)</h4>
-                                        <p>@Html.DisplayFor(model => item.Text)</p>
-                                    </div>
-                                </dd>
+                                <div class="top-five">
+                                    @foreach (var item in Model)
+                                    {
+                                        i++;
+                                        if ((i <= 5) && (i > 1))
+                                        {
+                                            var hreff = "../../Article/Details/" + item.ID;
+                                            <div class="each-top-five">
+                                                <a href=@hreff>
+                                                    <dl>
+                                                        <dd class="top-five-dd">
+                                                            @{var imagePath = "../../Visual/Images/" + item.Image;
+                                                                if (item.Image == null) { imagePath = ""; } }
+                                                            <img src=@imagePath style="width: 35%; height: 100%;" alt=@item.Image />
+                                                            <div class="five-article-text">
+                                                                <h2>@Html.DisplayFor(model => item.Title)</h2>
+                                                                <h4>@Html.DisplayFor(model => item.Author)</h4>
+                                                                <p>@Html.DisplayFor(model => item.Text)</p>
+                                                            </div>
+                                                        </dd>
 
-                            </dl>
-                        </a>
-</div>
-                }
-                else if (i > 5)
-                {
-                break;
-                }
-            }
-        </div>
-        {
-            i = 0;
-        }
-        
-        <div class="later-articles">
-            <br />
+                                                    </dl>
+                                                </a>
+                                            </div>
+                                                                    }
+                                                                    else if (i > 5)
+                                                                    {
+                                                                        break;
+                                                                    }
+                                                                }
+                                </div>
+                                                                {
+                                                                    i = 0;
+                                                                }
 
-            @foreach (var item in Model)
-            {
-                i++;
+                                                                <div class="later-articles">
+                                                                    <br />
 
-                if (i > 5)
-                {
-                    var hreff = "../../Article/Details/" + item.ID;
-                    <div class="each-later-articles">
-                        <a href=@hreff>
-                            <dl>
-                                <dd class="later-article-dd">
-                                    @{var imagePath = "../../Visual/Images/" + item.Image;
-                                        if (item.Image == null) { imagePath = ""; } }
-                                    <img id="detailsImage" src=@imagePath style="height: 80%; width: 100%;" alt=@item.Image />
-                                    <div class="later-article-text">
-                                        <h4>@Html.DisplayFor(model => item.Title)</h4>
-                                    </div>
-                                </dd>
-                            </dl>
-                        </a>
-                    </div>
-                        }
-                    }
-        </div>
+                                                                    @foreach (var item in Model)
+                                                                    {
+                                                                        i++;
 
-                                       
+                                                                        if (i > 5)
+                                                                        {
+                                                                            var hreff = "../../Article/Details/" + item.ID;
+                                                                            <div class="each-later-articles">
+                                                                                <a href=@hreff>
+                                                                                    <dl>
+                                                                                        <dd class="later-article-dd">
+                                                                                            @{var imagePath = "../../Visual/Images/" + item.Image;
+                                                                                                if (item.Image == null) { imagePath = ""; } }
+                                                                                            <img id="detailsImage" src=@imagePath style="height: 80%; width: 100%;" alt=@item.Image />
+                                                                                            <div class="later-article-text">
+                                                                                                <h4>@Html.DisplayFor(model => item.Title)</h4>
+                                                                                            </div>
+                                                                                        </dd>
+                                                                                    </dl>
+                                                                                </a>
+                                                                            </div>
+                                                                                                    }
+                                                                                                }
+                                                                </div>
 
-    }
-    else
-    {
-    <p> Please Login to view the content </p>
-    }
+
+
+                                                                                                }
+                                                                                                else
+                                                                                                {
+                                                                                                    <p> Please Login to view the content </p>
+                                                                                                }
