@@ -10,6 +10,7 @@ namespace FinalProject.Controllers
     public class NewsController : Controller
     {
         private NewsDbContext db = new NewsDbContext();
+        private string DEFULT_RESULT = "###";
 
         // GET: News (Articales)
         public ActionResult Index()
@@ -29,6 +30,14 @@ namespace FinalProject.Controllers
         public ActionResult FindWaves()
         {
             return View();
+        }
+
+
+        public string SearchArticleResult(string articleTitle, string autherName, string articleText,
+          DateTime? startDate, DateTime? endDate)
+        {
+
+            return "WORK";
         }
     }
 }
