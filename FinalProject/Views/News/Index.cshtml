@@ -56,9 +56,9 @@
                 function (result) {
                     $('#resultsView').html(result);
                 });
-
         }
         });
+
         var start = document.getElementById('StartDate');
         var end = document.getElementById('EndDate');
 
@@ -79,7 +79,6 @@
 @if (User.IsInRole("NormalUser") || User.IsInRole("Admin") || User.IsInRole("Author"))
 {
     <div class="top-one">
-        <form action="#">
 
             <table>
                 <tr>
@@ -92,7 +91,6 @@
                 </tr>
             </table>
             <div id="resultsView" />
-        </form>
         </div>
 
 
