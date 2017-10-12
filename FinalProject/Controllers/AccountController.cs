@@ -85,7 +85,7 @@ namespace FinalProject.Controllers
             }
         }
 
-        public ActionResult Detials()
+        public ActionResult Details()
         {
             string strCurrentUserId = User.Identity.GetUserId();
 

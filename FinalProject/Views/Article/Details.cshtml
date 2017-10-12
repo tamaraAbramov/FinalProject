@@ -19,7 +19,7 @@
                     <dd>
                         @{var imagePath = "../../Visual/Images/" + Model.Image;
                             if (Model.Image == null) { imagePath = ""; } }
-                        <img id="detailsImage" src=@imagePath alt=@Model.Image style="width:100%;" />
+                        <img id="detailsImage" src=@imagePath alt=@Model.Image style="max-height: 450px; max-width: 800px; border-radius: 8px;" />
                     </dd>
                     <dd>
                         <div style="white-space: pre-line">

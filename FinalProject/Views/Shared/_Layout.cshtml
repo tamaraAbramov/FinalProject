@@ -12,8 +12,10 @@
 <body>
     <div class="page-wrapper">
         <header>
-            <img src="~/Visual/Images/new on the wave.png" alt="New On The Wave" style="width:25%; margin-left:19%;" class="logo" />
+            <img src="~/Visual/Images/new on the wave.png" alt="New On The Wave" style="width:25%; margin-left:19%;" class="logo" 
+                 onclick="location.href='@Url.Action("Index", "News")'"/>
         </header>
+        
         <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
@@ -34,9 +36,12 @@
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">Manage<span class="caret"></span></a>
                                 <ul class="dropdown-menu">
                                     <li>@Html.ActionLink("Diagnostics", "Graph", "Article")</li>
-                                    <li>@Html.ActionLink("Manage Users", "ManageUsers", "Account")</li>
-                                    <li>@Html.ActionLink("Manage Articles", "Index", "Article")</li>
-                                    <li>@Html.ActionLink("New Article", "Create", "Article")</li>
+                                    <li class="divider"></li>
+                                    <li>@Html.ActionLink("Users", "ManageUsers", "Account")</li>
+                                    <li>@Html.ActionLink("Add Auther", "CreateAuthor", "Account")</li>
+                                    <li class="divider"></li>
+                                    <li>@Html.ActionLink("Articles", "Index", "Article")</li>
+                                    <li>@Html.ActionLink("Add Article", "Create", "Article")</li>
                                 </ul>
                             </li>
                         }
@@ -46,7 +51,7 @@
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">Manage<span class="caret"></span></a>
                                 <ul class="dropdown-menu">
                                     <li>@Html.ActionLink("My Articles", "Index", "Article")</li>
-                                    <li>@Html.ActionLink("New Article", "Create", "Article")</li>
+                                    <li>@Html.ActionLink("Add Article", "Create", "Article")</li>
                                 </ul>
                             </li>
                         }
@@ -55,7 +60,6 @@
                 </div>
             </div>
         </div>
-
         <div class="container body-content">
             @RenderBody()
             <hr />
