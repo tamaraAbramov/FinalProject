@@ -58,6 +58,12 @@ namespace FinalProject.Controllers
             }
         }
 
+        private void AddEnter(string userId, int articleId){
+            Enter temp = new Enter(articleId, userId);
+            db.Enters.Add(temp);
+            db.SaveChanges();
+        }
+
         // GET: Article/Details/5
         public ActionResult Details(int? id)
         {
@@ -72,6 +78,8 @@ namespace FinalProject.Controllers
                 {
                     return HttpNotFound();
                 }
+
+                AddEnter(User.Identity.GetUserId(), id.Value);
                 return View(article);
             }
             else

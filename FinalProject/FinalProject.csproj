@@ -201,6 +201,7 @@
     <Compile Include="Controllers\ArticleController.cs" />
     <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\BeachController.cs" />
+    <Compile Include="Controllers\EnterController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
@@ -210,6 +211,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Article.cs" />
     <Compile Include="Models\Beach.cs" />
+    <Compile Include="Models\Enter.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Facebook\FacebookAccount.cs" />
     <Compile Include="Models\Facebook\FacebookClient.cs" />
@@ -312,6 +314,7 @@
     <Content Include="Views\Account\CreateAuthor.cshtml" />
     <Content Include="Views\Account\Details.cshtml" />
     <Content Include="Views\News\SurfingInfo.cshtml" />
+    <Content Include="Views\Enter\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

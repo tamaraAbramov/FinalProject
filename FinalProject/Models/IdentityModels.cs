@@ -49,5 +49,7 @@ namespace FinalProject.Models
 
         public DbSet<Beach> Beaches { get; set; }
 
+        public DbSet<Enter> Enters { get; set; }
+
     }
 }
