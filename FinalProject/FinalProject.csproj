@@ -296,7 +296,6 @@
     <Content Include="Views\Comments\Details.cshtml" />
     <Content Include="Views\Comments\Edit.cshtml" />
     <Content Include="Views\Comments\Index.cshtml" />
-    <Content Include="Views\News\FindWaves.cshtml" />
     <Content Include="Views\News\Index.cshtml" />
     <Content Include="Views\Beach\Index.cshtml" />
     <Content Include="Views\Beach\Create.cshtml" />
@@ -308,7 +307,7 @@
     <Content Include="Views\Article\Graph.cshtml" />
     <Content Include="Views\Account\ManageUsers.cshtml" />
     <Content Include="Views\Beach\BeachStatistics.cshtml" />
-    <Content Include="Views\News\InsufficientAuthorization.cshtml" />
+    <Content Include="Views\Shared\PrivilegeError.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
