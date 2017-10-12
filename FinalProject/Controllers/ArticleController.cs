@@ -31,7 +31,7 @@ namespace FinalProject.Controllers
                                                                 {11, "November"},
                                                                 {12, "December"},
                                                             };
-        private NewsDbContext db = new NewsDbContext();
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Article
         public ActionResult Index()

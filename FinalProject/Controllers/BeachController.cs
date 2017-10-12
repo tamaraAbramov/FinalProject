@@ -13,7 +13,7 @@ namespace FinalProject.Controllers
 {
     public class BeachController : Controller
     {
-        NewsDbContext db = new NewsDbContext();
+        ApplicationDbContext db = new ApplicationDbContext();
         // GET: Beach
         public ActionResult Index()
         {

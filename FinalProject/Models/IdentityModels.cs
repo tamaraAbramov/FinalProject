@@ -41,5 +41,13 @@ namespace FinalProject.Models
         {
             return new ApplicationDbContext();
         }
+        public DbSet<Article> Articles { get; set; }
+
+        public DbSet<Comment> Comments { get; set; }
+
+        public DbSet<Like> Likes { get; set; }
+
+        public DbSet<Beach> Beaches { get; set; }
+
     }
 }
