@@ -1,0 +1,69 @@
+﻿@model FinalProject.Models.ApplicationUser
+
+@{
+    ViewBag.Title = "My Account";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>My Account</title>
+</head>
+<body>
+    <h4>My Account</h4>
+    <div>
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <td>
+                    @Html.DisplayFor(model => model.Email)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstName)
+                </th>
+                <td>
+                    @Html.DisplayFor(model => model.FirstName)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.LastName)
+                </th>
+                <td>
+                    @Html.DisplayFor(model => model.LastName)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Gender)
+                </th>
+                <td>
+                    @Html.DisplayFor(model => model.Gender)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.BirthDate)
+                </th>
+                <td>
+                    @Html.DisplayFor(model => model.BirthDate)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    Password:
+                </th>
+                <td>
+                    @Html.ActionLink("Change password", "ChangePassword", "Manage")
+                </td>
+            </tr>
+      </table>
+
+</div>
+</body>
+</html>

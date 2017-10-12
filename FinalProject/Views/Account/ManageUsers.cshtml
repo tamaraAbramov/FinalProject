@@ -1,4 +1,4 @@
-﻿@model IEnumerable<FinalProject.Models.ApplicationUser >
+﻿@model IEnumerable<FinalProject.Models.ApplicationUser>
 @{
     ViewBag.Title = "Manage Users";
 }
@@ -6,20 +6,22 @@
 
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta name="viewport" content="width=device-width" />
-        <title>Manage Users</title>
-    </head>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Manage Users</title>
+</head>
 <body>
-
     <h2>Manage Users</h2>
+    <p>
+        @Html.ActionLink("Create New article", "CreateAuthor")
+    </p>
     <table class="table">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Email)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstName )
+                @Html.DisplayNameFor(model => model.FirstName)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.LastName)
@@ -30,6 +32,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.BirthDate)
             </th>
+            <th></th>
         </tr>
 
         @foreach (var item in Model)
@@ -51,8 +54,7 @@
                     @Html.DisplayFor(modelItem => item.BirthDate)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id})
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
                 </td>
             </tr>
         }

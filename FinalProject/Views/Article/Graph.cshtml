@@ -2,10 +2,9 @@
 @{
     ViewBag.Title = "Histogram";
 }
-<canvas class="myCanvas" id="myCanvas" width="500" height="50">
+<canvas class="myCanvas" id="myCanvas" width="600" height="50">
     Your browser does not support the canvas element.
 </canvas>
-
 <script>
 var canvas = document.getElementById("myCanvas");
 var ctx=canvas.getContext("2d");
@@ -24,7 +23,6 @@ ctx.textAlign = "center";
 ctx.fillText("Graph of articles count posted by month", canvas.width/2, canvas.height/2);
 </script>
 
-
 <style>
     svg {
         position: relative;
@@ -33,30 +31,31 @@ ctx.fillText("Graph of articles count posted by month", canvas.width/2, canvas.h
         -ms-transform: translateX(-50%);
         transform: translateX(-50%);
     }
+
     .axis {
         font: 10px sans-serif;
     }
 
-    .axis path,
-    .axis line {
-        fill: none;
-        stroke: #000;
-        shape-rendering: crispEdges;
-    }
+        .axis path,
+        .axis line {
+            fill: none;
+            stroke: #000;
+            shape-rendering: crispEdges;
+        }
+
     .bar {
-      fill: steelblue;
+        fill: steelblue;
     }
-    
-    .bar:hover {
-      fill: brown;
-    }
-    
+
+        .bar:hover {
+            fill: brown;
+        }
+
     .axis--x path {
-      display: none;
+        display: none;
     }
 </style>
 <script src="http://d3js.org/d3.v3.min.js"></script>
-
 <script>
 
 var margin = {top: 20, right: 20, bottom: 70, left: 40},

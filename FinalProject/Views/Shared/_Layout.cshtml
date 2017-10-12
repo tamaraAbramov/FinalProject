@@ -4,11 +4,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - New On The Wave</title>
-    
+
     @Scripts.Render("~/bundles/modernizr")
     @Styles.Render("~/Content/css")
     <link rel="stylesheet" href="~/Content/News.css" type="text/css" media="screen" />
-
 </head>
 <body>
     <div class="page-wrapper">
@@ -56,36 +55,35 @@
                 </div>
             </div>
         </div>
+
         <div class="container body-content">
             @RenderBody()
             <hr />
         </div>
+    </div>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <section id="about">
+                <h3>About</h3>
+                <p>
+                    In this website you can find articles about surfing and surfers.
+                    Also Information of the top surfers beaches
+                </p>
+            </section>
+            <section id="Creators">
+                <h3>Creators</h3>
+                <ul>
+                    <li>Tamara Abramov</li>
+                    <li>Yuval Shlev</li>
+                    <li>Shany Natan</li>
+                </ul>
+            </section>
         </div>
-        <!-- Footer -->
-        <footer>
-            <div class="container">
-                <section id="about">
-                    <h3>About</h3>
-                    <p>
-                        In this website you can find articles about surfing and surfers.
-                        Also Information of the top surfers beaches
-                    </p>
-                </section>
-                <section id="Creators">
-                    <h3>Creators</h3>
-                    <ul>
-                        <li>Tamara Abramov</li>
-                        <li>Yuval Shlev</li>
-                        <li>Shany Natan</li>
-                    </ul>
-                </section>
-            </div>
-        </footer>
-        @Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/bundles/bootstrap")
-        @RenderSection("scripts", required: false)
-
+    </footer>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
 
 </body>
 </html>
-

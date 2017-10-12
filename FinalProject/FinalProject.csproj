@@ -307,11 +307,11 @@
     <Content Include="Views\Article\Graph.cshtml" />
     <Content Include="Views\Account\ManageUsers.cshtml" />
     <Content Include="Views\Beach\BeachStatistics.cshtml" />
-
     <Content Include="Views\Shared\PrivilegeError.cshtml" />
-
     <Content Include="Views\Shared\_ArticlesResult.cshtml" />
-
+    <Content Include="Views\Account\Delete.cshtml" />
+    <Content Include="Views\Account\CreateAuthor.cshtml" />
+    <Content Include="Views\Account\Detials.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
