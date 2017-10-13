@@ -35,6 +35,16 @@ namespace FinalProject.Controllers
             return View();
         }
 
+        //PrivilegeError
+        public ActionResult PrivilegeError()
+        {
+            return View();
+        }
+
+        public ActionResult SurfingInfo()
+        {
+            return View();
+        }
 
         public PartialViewResult SearchArticleResult(string articleTitle, string autherName, string articleText,
           DateTime? startDate, DateTime? endDate)

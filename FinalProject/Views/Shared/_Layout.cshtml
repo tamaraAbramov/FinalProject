@@ -74,6 +74,8 @@
                     In this website you can find articles about surfing and surfers.
                     Also Information of the top surfers beaches
                 </p>
+                @Html.ActionLink("Click here for more information about surfing", "SurfingInfo", "News")
+
             </section>
             <section id="Creators">
                 <h3>Creators</h3>
@@ -84,7 +86,7 @@
                 </ul>
             </section>
         </div>
-    </footer>
+    </footer>  
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)

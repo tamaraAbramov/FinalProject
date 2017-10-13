@@ -28,7 +28,18 @@ namespace FinalProject.Controllers
 
         public ActionResult ManageUsers()
         {
-            return View(UserManager.Users.ToList());
+            if (User.IsInRole("Admin"))
+            {
+                return View(UserManager.Users.ToList());
+            }
+            else if (User.IsInRole("NormalUser") || User.IsInRole("Author"))
+            {
+                return RedirectToAction("PrivilegeError", "News");
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
         }
 
         public ActionResult Delete(string id)
@@ -168,7 +179,6 @@ namespace FinalProject.Controllers
 
             
         }
-
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
