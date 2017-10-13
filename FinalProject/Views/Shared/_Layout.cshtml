@@ -29,10 +29,10 @@
                 </div>
                 <div class="navbar-collapse collapse" id="slow">
                     <ul class="nav navbar-nav">
-                        <li>@Html.ActionLink("Top 10 beaches", "Map", "Beach")</li>
-                        <li>@Html.ActionLink("Beach Statistics", "BeachStatistics", "Beach")</li>
                         @if (User.IsInRole("Admin"))
                         {
+                            <li>@Html.ActionLink("Top 10 beaches", "Map", "Beach")</li>
+                            <li>@Html.ActionLink("Beach Statistics", "BeachStatistics", "Beach")</li>
                             <li class="dropdown">
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">Manage<span class="caret"></span></a>
                                 <ul class="dropdown-menu">
@@ -51,6 +51,8 @@
                         }
                         @if (User.IsInRole("Author"))
                         {
+                            <li>@Html.ActionLink("Top 10 beaches", "Map", "Beach")</li>
+                            <li>@Html.ActionLink("Beach Statistics", "BeachStatistics", "Beach")</li>
                             <li class="dropdown">
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">Manage<span class="caret"></span></a>
                                 <ul class="dropdown-menu">
@@ -64,6 +66,8 @@
                         }
                         @if (User.IsInRole("NormalUser"))
                         {
+                            <li>@Html.ActionLink("Top 10 beaches", "Map", "Beach")</li>
+                            <li>@Html.ActionLink("Beach Statistics", "BeachStatistics", "Beach")</li>
                             <li class="dropdown">
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">Manage<span class="caret"></span></a>
                                 <ul class="dropdown-menu">
@@ -99,7 +103,7 @@
                 <h3>Creators</h3>
                 <ul>
                     <li>Tamara Abramov</li>
-                    <li>Yuval Shlev</li>
+                    <li>Yuval Shalev</li>
                     <li>Shany Natan</li>
                 </ul>
             </section>
