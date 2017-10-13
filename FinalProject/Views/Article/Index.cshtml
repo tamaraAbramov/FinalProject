@@ -54,7 +54,7 @@
             @Html.ActionLink("Create New article", "Create")
         </p>
     }
-    else if (User.IsInRole("NormalUser"))
+    else if (User.IsInRole("Author"))
     {
         <h2>My articles</h2>
 
