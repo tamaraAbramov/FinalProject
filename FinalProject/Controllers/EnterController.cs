@@ -98,6 +98,14 @@ namespace FinalProject.Controllers
                 return View();
             }
         }
+        private class Output{
+            public string articleTitle;
+            public int total;
+            public Output(string articleTitle, int total){
+                this.articleTitle = articleTitle;
+                this.total = total;
+            }
+        }
 
         public ActionResult Json(){
             if (User.IsInRole("Admin") || User.IsInRole("Author") || User.IsInRole("NormalUser"))
@@ -110,15 +118,19 @@ namespace FinalProject.Controllers
                         (enter, article ) => new { Article = article, Enter = enter}
                     )
                     .GroupBy(c => new {
-                                ArticleId = c.Article.Title
+                                ArticleTitle = c.Article.Title
                             }) 
                     .Select(c => new {
-                                articleId = c.Key.ArticleId,
+                                articleTitle = c.Key.ArticleTitle,
                                 total = c.Count()
                     })
                     .OrderBy(a => a.total)
                     .ToList();
-                return this.Json(articleEnters, JsonRequestBehavior.AllowGet);
+                List<Output> jsonOutput = new List<Output>();
+                foreach (var a in articleEnters){
+                    jsonOutput.Add(new Output(a.articleTitle, a.total));
+                }
+                return this.Json(jsonOutput, JsonRequestBehavior.AllowGet);
             }
             else if (User.IsInRole("NormalUser") || User.IsInRole("Author"))
             {
