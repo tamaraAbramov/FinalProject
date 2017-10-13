@@ -98,5 +98,45 @@ namespace FinalProject.Controllers
                 return View();
             }
         }
+
+        public ActionResult Json(){
+            if (User.IsInRole("Admin") || User.IsInRole("Author") || User.IsInRole("NormalUser"))
+            {
+                var articleEnters = db.Enters
+                    .GroupBy(c => new {
+                                ArticleId = c.ArticleId
+                            }) 
+                    .Select(c => new {
+                                articleId = c.Key.ArticleId,
+                                total = c.Count()
+                    })
+                    .OrderBy(a => a.articleId)
+                    .ToList();
+                return this.Json(articleEnters, JsonRequestBehavior.AllowGet);
+            }
+            else if (User.IsInRole("NormalUser") || User.IsInRole("Author"))
+            {
+                return RedirectToAction("PrivilegeError", "News");
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
+        }
+
+        public ActionResult Graph(){
+            if (User.IsInRole("Admin"))
+            {
+                return View();
+            }
+            else if (User.IsInRole("NormalUser") || User.IsInRole("Author"))
+            {
+                return RedirectToAction("PrivilegeError", "News");
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
+        }
     }
 }

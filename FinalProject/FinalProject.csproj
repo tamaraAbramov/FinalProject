@@ -315,6 +315,8 @@
     <Content Include="Views\Account\Details.cshtml" />
     <Content Include="Views\News\SurfingInfo.cshtml" />
     <Content Include="Views\Enter\Index.cshtml" />
+    <Content Include="Views\Enter\Json.cshtml" />
+    <Content Include="Views\Enter\Graph.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
