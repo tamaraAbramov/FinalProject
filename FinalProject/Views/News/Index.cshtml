@@ -79,19 +79,24 @@
 @if (User.IsInRole("NormalUser") || User.IsInRole("Admin") || User.IsInRole("Author"))
 {
     <div class="top-one">
-
-            <table>
-                <tr>
-                    <td><input type="text" placeholder="Article title" id="ArticleTitle" name="ArticleTitle" class="search-box"></td>
-                    <td><input type="text" placeholder="Auther name" id="AutherName" name="AutherName" class="search-box"></td>
-                    <td><input type="text" placeholder="words from text" id="ArticleText" name="ArticleText" class="search-box"></td>
-                    <td><input placeholder="From date" class="textbox-n" type="text" onfocus="(this.type='date')" id="StartDate"></td>      
-                    <td><input placeholder="To date" class="textbox-n" type="text" onfocus="(this.type='date')" id="EndDate"></td>
-                    <td><button id="SearchArticles" class="btn btn-primary">Search</button></td>
-                </tr>
+        <div class="search-tbl-header">
+            <table cellpadding="0" cellspacing="0" border="0" class="search-tbl">
+                <thead>
+                    <tr>
+                        <th class="search-tbl-th"><input type="text" placeholder="Article title" id="ArticleTitle" name="ArticleTitle" class="search-box"></th>
+                        <th class="search-tbl-th"><input type="text" placeholder="Auther name" id="AutherName" name="AutherName" class="search-box"></th>
+                        <th class="search-tbl-th"><input type="text" placeholder="words from text" id="ArticleText" name="ArticleText" class="search-box"></th>
+                        <th class="search-tbl-th"><input placeholder="From date"  data-date-format="dd/MM/yyyy" type="date" onfocus="(this.type='date')" id="StartDate" class="search-box"></th>
+                        <th class="search-tbl-th"><input placeholder="To date" data-date-format="dd/MM/yyyy" type="date" onfocus="(this.type='date')" id="EndDate" class="search-box"></th>
+                        <th class="search-tbl-th"><button id="SearchArticles" class="btn search-btn">Search</button></th>
+                    </tr>
+                </thead>
             </table>
+        </div>
             <div id="resultsView" />
         </div>
+
+
 
 
     int i = 0;

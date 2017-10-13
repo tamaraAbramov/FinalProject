@@ -687,3 +687,94 @@ td.dp_current, li.dp_current {
     font-size:20px;
     
  }
+
+  /*------------------
+    Search 
+-----------------*/
+  .search-tbl-header{
+     background: linear-gradient(to right, rgba(21, 102, 121, 0.82), rgba(255, 255, 255, 0));
+    -webkit-border-radius: 20px;
+    max-width: 1070px;
+  }
+
+.search-tbl {
+    width:100%;
+  table-layout: fixed;
+}
+
+.search-tbl-th {
+    padding: 20px 15px;
+  text-align: left;
+  font-weight: 500;
+  font-size: 12px;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.search-box{
+     -webkit-border-radius: 5px;
+     height:30px;
+     padding-left: 3px;
+     width: 120%;
+     font-size: 16px;
+}
+
+.search-btn{
+    color: #ffffff;
+    background-color: #49b1bf;
+    border-color: #287486;
+
+    color:aliceblue;
+}
+
+
+/*-------------------
+        Date
+--------------------*/
+
+/* Removes the clear button from date inputs */
+input[type="date"]::-webkit-clear-button {
+    display: none;
+}
+
+/* Removes the spin button */
+input[type="date"]::-webkit-inner-spin-button { 
+    display: none;
+}
+
+/* Always display the drop down caret */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    color: #2c3e50;
+}
+
+/* A few custom styles for date inputs */
+input[type="date"] {
+   
+    display: inline-block !important;
+    visibility: visible !important;
+}
+
+input[type="date"], focus {
+    color: #95a5a6;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+}
+
+.birth-date {
+    display: block;
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.428571429;
+    color: #555555;
+    vertical-align: middle;
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+    transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
