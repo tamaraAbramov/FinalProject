@@ -10,7 +10,7 @@ namespace FinalProject.Controllers
 {
     public class NewsController : Controller
     {
-        private NewsDbContext db = new NewsDbContext();
+        private ApplicationDbContext db = new ApplicationDbContext();
         private string DEFULT_RESULT = "###";
 
         // GET: News (Articales)

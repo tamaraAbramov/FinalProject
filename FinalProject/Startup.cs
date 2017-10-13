@@ -123,7 +123,7 @@ namespace FinalProject
 
         private void PopulateTopTenBeaches()
         {
-            NewsDbContext db = new NewsDbContext();
+            ApplicationDbContext db = new ApplicationDbContext();
             var result = db.Beaches;
 
             //  Check if the DB is empty
@@ -152,7 +152,7 @@ namespace FinalProject
 
         private void AddArticles(string authorAlmony, string authorIDAlmony)
         {
-            NewsDbContext db = new NewsDbContext();
+            ApplicationDbContext db = new ApplicationDbContext();
             var result = db.Articles;
 
             //  Check if the DB is empty
