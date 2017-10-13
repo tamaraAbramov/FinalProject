@@ -142,7 +142,7 @@ namespace FinalProject.Controllers
             }
         }
 
-        public ActionResult Graph(){
+        public ActionResult Diagnostics(){
             if (User.IsInRole("Admin"))
             {
                 return View();
