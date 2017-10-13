@@ -398,8 +398,8 @@ namespace FinalProject.Controllers
             return this.Json(temp, JsonRequestBehavior.AllowGet);
         }
 
-        // GET: Articale/Graph
-        public ActionResult Graph()
+        // GET: Articale/Diagnostics
+        public ActionResult Diagnostics()
         {
             if (User.IsInRole("Admin"))
             {
