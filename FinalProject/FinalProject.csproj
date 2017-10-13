@@ -305,7 +305,7 @@
     <Content Include="Views\Beach\Edit.cshtml" />
     <Content Include="Views\Beach\Delete.cshtml" />
     <Content Include="Views\Article\ByMonth.cshtml" />
-    <Content Include="Views\Article\Graph.cshtml" />
+    <Content Include="Views\Article\Diagnostics.cshtml" />
     <Content Include="Views\Account\ManageUsers.cshtml" />
     <Content Include="Views\Beach\BeachStatistics.cshtml" />
     <Content Include="Views\News\PrivilegeError.cshtml" />
