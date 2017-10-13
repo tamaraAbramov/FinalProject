@@ -103,14 +103,20 @@ namespace FinalProject.Controllers
             if (User.IsInRole("Admin") || User.IsInRole("Author") || User.IsInRole("NormalUser"))
             {
                 var articleEnters = db.Enters
+                    .Join(
+                        db.Articles,
+                        enter => enter.ArticleId,
+                        article => article.ID,
+                        (enter, article ) => new { Article = article, Enter = enter}
+                    )
                     .GroupBy(c => new {
-                                ArticleId = c.ArticleId
+                                ArticleId = c.Article.Title
                             }) 
                     .Select(c => new {
                                 articleId = c.Key.ArticleId,
                                 total = c.Count()
                     })
-                    .OrderBy(a => a.articleId)
+                    .OrderBy(a => a.total)
                     .ToList();
                 return this.Json(articleEnters, JsonRequestBehavior.AllowGet);
             }
