@@ -732,7 +732,6 @@ namespace FinalProject.Controllers
                 var resultToShow = SearchUserResult(email, firstName, lastName, roleType, minCount);
 
                 return this.Json(resultToShow, JsonRequestBehavior.AllowGet);
-            //    return  View(resultToShow);
             }
             else if (User.IsInRole("NormalUser") || User.IsInRole("Author"))
             {
