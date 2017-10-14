@@ -722,8 +722,8 @@ namespace FinalProject.Controllers
 
             return resultOfSearch;
         }
+        
 
-        [HttpPost]
         public ActionResult SearchUsers(string email, string firstName, string lastName, string roleType,
         int minCount)
         {
@@ -731,7 +731,8 @@ namespace FinalProject.Controllers
             {
                 var resultToShow = SearchUserResult(email, firstName, lastName, roleType, minCount);
 
-                return  View(resultToShow);
+                return this.Json(resultToShow, JsonRequestBehavior.AllowGet);
+            //    return  View(resultToShow);
             }
             else if (User.IsInRole("NormalUser") || User.IsInRole("Author"))
             {
