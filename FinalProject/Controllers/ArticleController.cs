@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using FinalProject.Models.Facebook;
 using System.Threading.Tasks;
+using System.Configuration;
 
 namespace FinalProject.Controllers
 {
@@ -135,7 +136,7 @@ namespace FinalProject.Controllers
 
                     var facebookClient = new FacebookClient();
                     var facebookService = new FacebookService(facebookClient);
-                    var postOnWallTask = facebookService.PostOnWallAsync(FacebookSettings.AccessToken, messageToPost);
+                    var postOnWallTask = facebookService.PostOnWallAsync(ConfigurationManager.AppSettings["FBAccessToken"], messageToPost);
 
 
                     if (ImageUploud != null)

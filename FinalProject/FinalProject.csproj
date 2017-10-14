@@ -218,7 +218,6 @@
     <Compile Include="Models\Beach.cs" />
     <Compile Include="Models\Enter.cs" />
     <Compile Include="Models\Comment.cs" />
-    <Compile Include="Models\Facebook\FacebookAccount.cs" />
     <Compile Include="Models\Facebook\FacebookClient.cs" />
     <Compile Include="Models\Facebook\FacebookService.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -321,13 +320,10 @@
     <Content Include="Views\News\SurfingInfo.cshtml" />
     <Content Include="Views\Enter\Index.cshtml" />
     <Content Include="Views\Enter\Json.cshtml" />
-
     <Content Include="Views\Enter\Graph.cshtml" />
     <Content Include="Views\Account\SearchUsers.cshtml" />
-
     <Content Include="Views\Enter\Diagnostics.cshtml" />
     <Content Include="Views\Beach\Details.cshtml" />
-
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
