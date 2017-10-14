@@ -1,0 +1,71 @@
+﻿@model IEnumerable<FinalProject.Models.SearchUserOutput>
+<br />
+<br />
+<section class="panel panel-info">
+    @if (Model.Count() > 0)
+    {
+        <div class="panel-heading">
+            <h2 class="panel-title">Matched results</h2>
+        </div>
+        <div class="panel-body">
+            <table class="table table-hover">
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.User.Email)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.User.FirstName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.User.LastName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.User.Gender)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.RoleType)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CountOfArticles)
+                        </th>
+                        <th></th>
+                    </tr>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <th>
+                                @Html.DisplayFor(modelItem => item.User.Email)
+                            </th>
+                            <th>
+                                @Html.DisplayFor(modelItem => item.User.FirstName)
+                            </th>
+                            <th>
+                                @Html.DisplayFor(modelItem => item.User.LastName)
+                            </th>
+                            <th>
+                                @Html.DisplayFor(modelItem => item.User.Gender)
+                            </th>
+                            <th>
+                                @Html.DisplayFor(modelItem => item.RoleType)
+                            </th>
+                            <th>
+                                @Html.DisplayFor(modelItem => item.CountOfArticles)
+                            </th>
+                            <td>
+                                @Html.ActionLink("Delete", "Delete", new { id = item.User.Id })
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+        </div>
+    }
+    else
+    {
+        <div class="panel-body">
+            <h2 class="panel-title">Results not found</h2>
+        </div>
+    }
+</section>
+
