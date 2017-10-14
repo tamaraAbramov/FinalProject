@@ -103,11 +103,13 @@
                       th.appendChild(text);
                       tr.appendChild(th);
 
+                      var th = document.createElement("th");
                       var a = document.createElement("a");
                       a.href = "/Account/Delete/" + userId;
                       var text = document.createTextNode("Delete");
                       a.appendChild(text);
-                      tr.appendChild(a);
+                      th.appendChild(a);
+                      tr.appendChild(th);
 
                       table.appendChild(tr);
                   }
@@ -217,9 +219,9 @@
                             <th>
                                 @Html.DisplayFor(modelItem => item.CountOfArticles)
                             </th>
-                            <td>
+                            <th>
                                 @Html.ActionLink("Delete", "Delete", new { id = item.User.Id })
-                            </td>
+                            </th>
                         </tr>
                     }
 
