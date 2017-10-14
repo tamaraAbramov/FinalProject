@@ -15,11 +15,23 @@ namespace FinalProject.Controllers
     {
         ApplicationDbContext db = new ApplicationDbContext();
         // GET: Beach
-        public ActionResult Index()
+        public ActionResult Index(string beachName, string beachDescription)
         {
+            var beaches = from a in db.Beaches select a; //LINQ
+
             if (User.IsInRole("Admin"))
             {
-                return View(db.Beaches.ToList());
+                if (!String.IsNullOrEmpty(beachName))
+                {
+                   beaches = beaches.Where(s => s.Name.Contains(beachName));
+                }
+
+                if (!String.IsNullOrEmpty(beachDescription))
+                {
+                    beaches = beaches.Where(s => s.Description.Contains(beachDescription));
+                }
+
+                return View(beaches.ToList());
             }
             else if (User.IsInRole("NormalUser") || User.IsInRole("Author"))
             {

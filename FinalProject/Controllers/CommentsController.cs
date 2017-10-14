@@ -17,15 +17,63 @@ namespace FinalProject.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Comments
-        public ActionResult Index()
+        public ActionResult Index(string articleTitle, string commentTitle, string commentUserName)
         {
-            string strCurrentUserId = User.Identity.GetUserId();
-            ApplicationUser user = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(strCurrentUserId);
+           
 
-            var userName = user.FirstName + " " + user.LastName;
-            
-            var comments = db.Comments.Include(c => c.ArticleComment).Where(c => c.CommentUser == userName);
-            return View(comments.ToList());
+            if (User.IsInRole("Admin"))
+            {
+                var comments = from a in db.Comments select a;
+
+                if (!String.IsNullOrEmpty(articleTitle))
+                {
+                    comments = comments.Where(s => s.ArticleComment.Title.Contains(articleTitle));
+                }
+
+                if (!String.IsNullOrEmpty(commentTitle))
+                {
+                    comments = comments.Where(s => s.CommentTitle.Contains(commentTitle));
+                }
+
+                if (!String.IsNullOrEmpty(commentUserName))
+                {
+                    comments = comments.Where(s => s.CommentUser.Contains(commentUserName));
+                }
+
+                return View(comments.ToList());
+            }
+            else if (User.Identity.IsAuthenticated)
+            {
+                string strCurrentUserId = User.Identity.GetUserId();
+                ApplicationUser user = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(strCurrentUserId);
+
+                var userName = user.FirstName + " " + user.LastName;
+
+                var comments = db.Comments.Include(c => c.ArticleComment).Where(c => c.CommentUser == userName);
+
+                if (!String.IsNullOrEmpty(articleTitle))
+                {
+                    comments = comments.Where(s => s.ArticleComment.Title.Contains(articleTitle));
+                }
+
+                if (!String.IsNullOrEmpty(commentTitle))
+                {
+                    comments = comments.Where(s => s.CommentTitle.Contains(commentTitle));
+                }
+
+                if (!String.IsNullOrEmpty(commentUserName))
+                {
+                    comments = comments.Where(s => s.CommentUser.Contains(commentUserName));
+                }
+
+                return View(comments.ToList());
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+
         }
 
         // GET: Comments/Details/5
@@ -40,14 +88,46 @@ namespace FinalProject.Controllers
             {
                 return HttpNotFound();
             }
-            return View(comment);
+
+            if (User.IsInRole("Admin"))
+            {
+                return View(comment);
+            }
+            else if (User.Identity.IsAuthenticated)
+            {
+                string strCurrentUserId = User.Identity.GetUserId();
+                ApplicationUser user = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(strCurrentUserId);
+
+                var userName = user.FirstName + " " + user.LastName;
+
+                if (userName == comment.CommentUser)
+                {
+                    return View(comment);
+                }
+                else
+                {
+                    return RedirectToAction("PrivilegeError", "News");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }            
         }
 
         // GET: Comments/Create
         public ActionResult Create()
         {
-            ViewBag.ArticleID = new SelectList(db.Articles, "ID", "Title");
-            return View();
+            if (User.Identity.IsAuthenticated)
+            {
+                ViewBag.ArticleID = new SelectList(db.Articles, "ID", "Title");
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
         }
 
         // POST: Comments/Create
@@ -57,22 +137,30 @@ namespace FinalProject.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,ArticleID,CommentTitle,CommentUser,Text, PublishDate")] Comment comment)
         {
-            if (ModelState.IsValid)
+            if (User.Identity.IsAuthenticated)
             {
-                string strCurrentUserId = User.Identity.GetUserId();
-                ApplicationUser user = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(strCurrentUserId);
+                if (ModelState.IsValid)
+                {
+                    string strCurrentUserId = User.Identity.GetUserId();
+                    ApplicationUser user = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(strCurrentUserId);
 
-                comment.CommentUser = user.FirstName + " " + user.LastName;
+                    comment.CommentUser = user.FirstName + " " + user.LastName;
 
-                comment.PublishDate = System.DateTime.Now;
+                    comment.PublishDate = System.DateTime.Now;
 
-                db.Comments.Add(comment);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                    db.Comments.Add(comment);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+
+                ViewBag.ArticleID = new SelectList(db.Articles, "ID", "Title", comment.ArticleID);
+                return View(comment);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
             }
 
-            ViewBag.ArticleID = new SelectList(db.Articles, "ID", "Title", comment.ArticleID);
-            return View(comment);
         }
 
         // GET: Comments/Edit/5
@@ -82,13 +170,35 @@ namespace FinalProject.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Comment comment = db.Comments.Find(id);
+
             if (comment == null)
             {
                 return HttpNotFound();
             }
+
             ViewBag.ArticleID = new SelectList(db.Articles, "ID", "Title", comment.ArticleID);
-            return View(comment);
+
+            string strCurrentUserId = User.Identity.GetUserId();
+            ApplicationUser user = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(strCurrentUserId);
+
+            var userName = user.FirstName + " " + user.LastName;
+
+            if (User.IsInRole("Admin") || (userName == comment.CommentUser))
+            {
+                return View(comment);
+            }
+            else if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("PrivilegeError", "News");
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+
         }
 
         // POST: Comments/Edit/5
@@ -98,15 +208,35 @@ namespace FinalProject.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,ArticleID,CommentTitle,CommentUser,Text, PublishDate")] Comment comment)
         {
-            if (ModelState.IsValid)
+
+            string strCurrentUserId = User.Identity.GetUserId();
+            ApplicationUser user = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(strCurrentUserId);
+
+            var userName = user.FirstName + " " + user.LastName;
+
+            if (User.IsInRole("Admin") || (userName == comment.CommentUser))
             {
-                comment.PublishDate = System.DateTime.Now;
-                db.Entry(comment).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    comment.PublishDate = System.DateTime.Now;
+                    db.Entry(comment).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                ViewBag.ArticleID = new SelectList(db.Articles, "ID", "Title", comment.ArticleID);
+                return View(comment);
             }
-            ViewBag.ArticleID = new SelectList(db.Articles, "ID", "Title", comment.ArticleID);
-            return View(comment);
+            else if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("PrivilegeError", "News");
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+
+            
         }
 
         // GET: Comments/Delete/5
@@ -121,7 +251,26 @@ namespace FinalProject.Controllers
             {
                 return HttpNotFound();
             }
-            return View(comment);
+
+            string strCurrentUserId = User.Identity.GetUserId();
+            ApplicationUser user = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(strCurrentUserId);
+
+            var userName = user.FirstName + " " + user.LastName;
+
+            if (User.IsInRole("Admin") || (userName == comment.CommentUser))
+            {                
+                return View(comment);
+            }
+            else if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("PrivilegeError", "News");
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            
         }
 
         // POST: Comments/Delete/5
@@ -129,10 +278,29 @@ namespace FinalProject.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+
+            string strCurrentUserId = User.Identity.GetUserId();
+            ApplicationUser user = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(strCurrentUserId);
+
+            var userName = user.FirstName + " " + user.LastName;
             Comment comment = db.Comments.Find(id);
-            db.Comments.Remove(comment);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+
+            if (User.IsInRole("Admin") || (userName == comment.CommentUser))
+            {
+                db.Comments.Remove(comment);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            else if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("PrivilegeError", "News");
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            
         }
 
         protected override void Dispose(bool disposing)

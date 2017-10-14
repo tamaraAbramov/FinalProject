@@ -29,30 +29,54 @@
                 </div>
                 <div class="navbar-collapse collapse" id="slow">
                     <ul class="nav navbar-nav">
-                        <li>@Html.ActionLink("Top 10 beaches", "Map", "Beach")</li>
-                        <li>@Html.ActionLink("Beach Statistics", "BeachStatistics", "Beach")</li>
                         @if (User.IsInRole("Admin"))
                         {
+                            <li>@Html.ActionLink("Top 10 beaches", "Map", "Beach")</li>
+                            <li>@Html.ActionLink("Beach Statistics", "BeachStatistics", "Beach")</li>
                             <li class="dropdown">
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">Manage<span class="caret"></span></a>
                                 <ul class="dropdown-menu">
-                                    <li>@Html.ActionLink("Diagnostics", "Graph", "Article")</li>
+                                    <li>@Html.ActionLink("My Account", "Details", "Account")</li>
                                     <li class="divider"></li>
                                     <li>@Html.ActionLink("Users", "ManageUsers", "Account")</li>
                                     <li>@Html.ActionLink("Add Auther", "CreateAuthor", "Account")</li>
                                     <li class="divider"></li>
                                     <li>@Html.ActionLink("Articles", "Index", "Article")</li>
                                     <li>@Html.ActionLink("Add Article", "Create", "Article")</li>
+                                    <li>@Html.ActionLink("Comment", "Index", "Comments")</li>
+                                    <li class="divider"></li>
+                                    <li>@Html.ActionLink("Beaches", "Index", "Beach")</li>
+                                    <li class="divider"></li>
+                                    <li>@Html.ActionLink("Article Timeline", "Diagnostics", "Article")</li>
+                                    <li>@Html.ActionLink("Most viewd articles", "Diagnostics", "Enter")</li>
                                 </ul>
                             </li>
                         }
                         @if (User.IsInRole("Author"))
                         {
+                            <li>@Html.ActionLink("Top 10 beaches", "Map", "Beach")</li>
+                            <li>@Html.ActionLink("Beach Statistics", "BeachStatistics", "Beach")</li>
                             <li class="dropdown">
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">Manage<span class="caret"></span></a>
                                 <ul class="dropdown-menu">
+                                    <li>@Html.ActionLink("My Account", "Details", "Account")</li>
+                                    <li class="divider"></li>
                                     <li>@Html.ActionLink("My Articles", "Index", "Article")</li>
                                     <li>@Html.ActionLink("Add Article", "Create", "Article")</li>
+                                    <li>@Html.ActionLink("My Comment", "Index", "Comments")</li>
+                                </ul>
+                            </li>
+                        }
+                        @if (User.IsInRole("NormalUser"))
+                        {
+                            <li>@Html.ActionLink("Top 10 beaches", "Map", "Beach")</li>
+                            <li>@Html.ActionLink("Beach Statistics", "BeachStatistics", "Beach")</li>
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Manage<span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li>@Html.ActionLink("My Account", "Details", "Account")</li>
+                                    <li class="divider"></li>
+                                    <li>@Html.ActionLink("My Comment", "Index", "Comments")</li>
                                 </ul>
                             </li>
                         }
@@ -82,7 +106,7 @@
                 <h3>Creators</h3>
                 <ul>
                     <li>Tamara Abramov</li>
-                    <li>Yuval Shlev</li>
+                    <li>Yuval Shalev</li>
                     <li>Shany Natan</li>
                 </ul>
             </section>
