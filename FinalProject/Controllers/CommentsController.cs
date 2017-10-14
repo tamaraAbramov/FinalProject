@@ -17,11 +17,29 @@ namespace FinalProject.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Comments
-        public ActionResult Index()
+        public ActionResult Index(string articleTitle, string commentTitle, string commentUserName)
         {
+           
+
             if (User.IsInRole("Admin"))
             {
-                var comments = db.Comments;
+                var comments = from a in db.Comments select a;
+
+                if (!String.IsNullOrEmpty(articleTitle))
+                {
+                    comments = comments.Where(s => s.ArticleComment.Title.Contains(articleTitle));
+                }
+
+                if (!String.IsNullOrEmpty(commentTitle))
+                {
+                    comments = comments.Where(s => s.CommentTitle.Contains(commentTitle));
+                }
+
+                if (!String.IsNullOrEmpty(commentUserName))
+                {
+                    comments = comments.Where(s => s.CommentUser.Contains(commentUserName));
+                }
+
                 return View(comments.ToList());
             }
             else if (User.Identity.IsAuthenticated)
@@ -32,6 +50,22 @@ namespace FinalProject.Controllers
                 var userName = user.FirstName + " " + user.LastName;
 
                 var comments = db.Comments.Include(c => c.ArticleComment).Where(c => c.CommentUser == userName);
+
+                if (!String.IsNullOrEmpty(articleTitle))
+                {
+                    comments = comments.Where(s => s.ArticleComment.Title.Contains(articleTitle));
+                }
+
+                if (!String.IsNullOrEmpty(commentTitle))
+                {
+                    comments = comments.Where(s => s.CommentTitle.Contains(commentTitle));
+                }
+
+                if (!String.IsNullOrEmpty(commentUserName))
+                {
+                    comments = comments.Where(s => s.CommentUser.Contains(commentUserName));
+                }
+
                 return View(comments.ToList());
             }
             else
@@ -84,8 +118,16 @@ namespace FinalProject.Controllers
         // GET: Comments/Create
         public ActionResult Create()
         {
-            ViewBag.ArticleID = new SelectList(db.Articles, "ID", "Title");
-            return View();
+            if (User.Identity.IsAuthenticated)
+            {
+                ViewBag.ArticleID = new SelectList(db.Articles, "ID", "Title");
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
         }
 
         // POST: Comments/Create
@@ -95,22 +137,30 @@ namespace FinalProject.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,ArticleID,CommentTitle,CommentUser,Text, PublishDate")] Comment comment)
         {
-            if (ModelState.IsValid)
+            if (User.Identity.IsAuthenticated)
             {
-                string strCurrentUserId = User.Identity.GetUserId();
-                ApplicationUser user = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(strCurrentUserId);
+                if (ModelState.IsValid)
+                {
+                    string strCurrentUserId = User.Identity.GetUserId();
+                    ApplicationUser user = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(strCurrentUserId);
 
-                comment.CommentUser = user.FirstName + " " + user.LastName;
+                    comment.CommentUser = user.FirstName + " " + user.LastName;
 
-                comment.PublishDate = System.DateTime.Now;
+                    comment.PublishDate = System.DateTime.Now;
 
-                db.Comments.Add(comment);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                    db.Comments.Add(comment);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+
+                ViewBag.ArticleID = new SelectList(db.Articles, "ID", "Title", comment.ArticleID);
+                return View(comment);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
             }
 
-            ViewBag.ArticleID = new SelectList(db.Articles, "ID", "Title", comment.ArticleID);
-            return View(comment);
         }
 
         // GET: Comments/Edit/5

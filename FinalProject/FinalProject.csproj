@@ -317,6 +317,7 @@
     <Content Include="Views\Enter\Index.cshtml" />
     <Content Include="Views\Enter\Json.cshtml" />
     <Content Include="Views\Enter\Diagnostics.cshtml" />
+    <Content Include="Views\Beach\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

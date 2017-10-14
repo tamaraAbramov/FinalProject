@@ -1,0 +1,58 @@
+﻿@model FinalProject.Models.Beach
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Beach</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Zoom)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Zoom)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Lattitude)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Lattitude)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Longtidute)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Longtidute)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.BeachId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
