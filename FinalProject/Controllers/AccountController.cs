@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using FinalProject.Models;
 using System.Net;
+using System.Collections.Generic;
 
 namespace FinalProject.Controllers
 {
@@ -20,6 +21,7 @@ namespace FinalProject.Controllers
         private ApplicationUserManager _userManager;
 
         ApplicationDbContext db = new ApplicationDbContext();
+        private string DEFULT_RESULT = "###";
 
         public AccountController()
         {
@@ -30,7 +32,8 @@ namespace FinalProject.Controllers
         {
             if (User.IsInRole("Admin"))
             {
-                return View(UserManager.Users.ToList());
+                var AllUsers = SearchUserResult(string.Empty, string.Empty, string.Empty, string.Empty, 0);
+                return View(AllUsers);
             }
             else if (User.IsInRole("NormalUser") || User.IsInRole("Author"))
             {
@@ -57,7 +60,7 @@ namespace FinalProject.Controllers
                 {
                     return HttpNotFound();
                 }
-                
+
                 return View(user);
             }
             else if (User.IsInRole("NormalUser") || User.IsInRole("Author"))
@@ -70,7 +73,7 @@ namespace FinalProject.Controllers
             }
         }
 
-        
+
 
 
         // POST: Article/Delete/5
@@ -177,7 +180,7 @@ namespace FinalProject.Controllers
                 return RedirectToAction("Login", "Account");
             }
 
-            
+
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
@@ -652,5 +655,93 @@ namespace FinalProject.Controllers
             }
         }
         #endregion
+
+        public List<SearchUserOutput> SearchUserResult(string email, string firstName, string lastName, string roleType,
+        int minCount)
+        {
+            if (email == DEFULT_RESULT)
+            {
+                email = string.Empty;
+            }
+
+            if (firstName == DEFULT_RESULT)
+            {
+                firstName = string.Empty;
+            }
+
+            if (lastName == DEFULT_RESULT)
+            {
+                lastName = string.Empty;
+            }
+
+            if (roleType == DEFULT_RESULT)
+            {
+                roleType = string.Empty;
+            }
+
+            var users = (from user in db.Users
+                         join article in db.Articles on user.Id equals article.AuthorID
+                         into j1
+                         from j2 in j1.DefaultIfEmpty()
+                         where user.FirstName.Contains(firstName) &&
+                         user.LastName.Contains(lastName) &&
+                         user.Email.Contains(email)
+                         group j2 by user into newGroup
+                         select new
+                         {
+                             user = newGroup.Key,
+                             CountOfArticles = newGroup.Count(t => t.AuthorID != null)
+                         }).Where(c => c.CountOfArticles >= minCount).ToList();
+
+            // Gets specific roleId
+            var roleId = db.Roles.Where(r => r.Name == roleType).Select(r => new { r.Id }).FirstOrDefault();
+
+            List<SearchUserOutput> resultOfSearch = new List<SearchUserOutput>();
+
+            if (roleId != null)
+            {
+                foreach (var userItem in users)
+                {
+                    if (userItem.user.Roles.ToList().FirstOrDefault().RoleId == roleId.Id)
+                    {
+                        resultOfSearch.Add(new SearchUserOutput(userItem.user, userItem.CountOfArticles, roleType));
+                    }
+                }
+            }
+            // In case all the roles accepted
+            else
+            {
+                foreach (var userItem in users)
+                {
+                    var userRoleId = userItem.user.Roles.ToList().FirstOrDefault().RoleId;
+                    var roleName = db.Roles.Where(r => r.Id == userRoleId).Select(r => new { r.Name }).FirstOrDefault();
+
+                    resultOfSearch.Add(new SearchUserOutput(userItem.user, userItem.CountOfArticles, roleName.Name));
+                }
+            }
+
+            return resultOfSearch;
+        }
+        
+
+        public ActionResult SearchUsers(string email, string firstName, string lastName, string roleType,
+        int minCount)
+        {
+            if (User.IsInRole("Admin"))
+            {
+                var resultToShow = SearchUserResult(email, firstName, lastName, roleType, minCount);
+
+                return this.Json(resultToShow, JsonRequestBehavior.AllowGet);
+            }
+            else if (User.IsInRole("NormalUser") || User.IsInRole("Author"))
+            {
+                return RedirectToAction("PrivilegeError", "News");
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+        }
     }
 }
