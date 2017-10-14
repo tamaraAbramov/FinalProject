@@ -219,6 +219,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Like.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\SearchUserOutput.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -316,8 +317,13 @@
     <Content Include="Views\News\SurfingInfo.cshtml" />
     <Content Include="Views\Enter\Index.cshtml" />
     <Content Include="Views\Enter\Json.cshtml" />
+
+    <Content Include="Views\Enter\Graph.cshtml" />
+    <Content Include="Views\Account\SearchUsers.cshtml" />
+
     <Content Include="Views\Enter\Diagnostics.cshtml" />
     <Content Include="Views\Beach\Details.cshtml" />
+
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
