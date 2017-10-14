@@ -53,6 +53,65 @@
                 roleType: roleType, minCount: minCount
             },
               function (result) {
+                  console.log(result);
+                  table = document.getElementsByClassName("table table-hover")[0].children[0]
+                  tds = document.getElementsByClassName("table table-hover")[0].children[0].children;
+                  // remove old table content
+                  for (i = tds.length - 1; i >= 1; i--) {
+                      tds[i].remove();
+                  }
+                  // add new table rows
+                  for (i = 0; i < result.length; i++){
+                     
+
+                      var email = result[i].User.Email;
+                      var firstName = result[i].User.FirstName;
+                      var lastName = result[i].User.LastName;
+                      var gender = result[i].User.Gender;
+                      var roleType = result[i].RoleType;
+                      var countOfArticles = result[i].CountOfArticles;
+                      var userId = result[i].User.Id;
+
+                      var tr = document.createElement("tr");
+                      var th = document.createElement("th");
+                      var text = document.createTextNode(email);
+                      th.appendChild(text);
+                      tr.appendChild(th);
+
+                      var th = document.createElement("th");
+                      var text = document.createTextNode(firstName);
+                      th.appendChild(text);
+                      tr.appendChild(th);
+
+                      var th = document.createElement("th");
+                      var text = document.createTextNode(lastName);
+                      th.appendChild(text);
+                      tr.appendChild(th);
+
+                      var th = document.createElement("th");
+                      var text = document.createTextNode(gender);
+                      th.appendChild(text);
+                      tr.appendChild(th);
+
+                      var th = document.createElement("th");
+                      var text = document.createTextNode(roleType);
+                      th.appendChild(text);
+                      tr.appendChild(th);
+
+                      var th = document.createElement("th");
+                      var text = document.createTextNode(countOfArticles);
+                      th.appendChild(text);
+                      tr.appendChild(th);
+
+                      var a = document.createElement("a");
+                      a.href = "/Account/Delete/" + userId;
+                      var text = document.createTextNode("Delete");
+                      a.appendChild(text);
+                      tr.appendChild(a);
+
+                      table.appendChild(tr);
+                  }
+                
               });
         }
 });
